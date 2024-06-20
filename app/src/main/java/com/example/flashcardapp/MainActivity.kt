@@ -4,22 +4,35 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.preference.PreferenceManager
+import com.example.flashcardapp.ui.HomeScreen
 import com.example.flashcardapp.ui.theme.FlashCardAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Initialize SharedPreference
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
         setContent {
             FlashCardAppTheme {
+                FlashardApp()
             }
         }
     }
 }
+
+//@Preview(
+//    name = "Light",
+//    showBackground = true,
+//    showSystemUi = true,
+//    uiMode = 0
+//)
+//@Composable
+//fun PreviewApp() {
+//    FlashCardAppTheme {
+//        HomeScreen()
+//    }
+//}
