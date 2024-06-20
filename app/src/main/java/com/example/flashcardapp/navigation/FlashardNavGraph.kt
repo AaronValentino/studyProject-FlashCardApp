@@ -57,14 +57,24 @@ fun FlashardNavHost(
         mutableStateOf(Screen_Home.route)
     }
 
-    var topAppBarOnClicked = when(topAppBarIcon) {
-        "home" -> Screen_UserProfile.route
-        else -> Screen_Home.route
+    val topAppBarOnClickedUserProfile: () -> Unit = {
+        navController.navigate(Screen_UserProfile.route)
+    }
+    val topAppBarOnClickedHome: () -> Unit = {
+        navController.popBackStack(
+            Screen_Home.route,
+            inclusive = false
+        )
+    }
+
+    val topAppBarOnClicked: () -> Unit = when(topAppBarIcon) {
+        "home" -> topAppBarOnClickedUserProfile
+        else -> topAppBarOnClickedHome
     }
 
     Scaffold(
         topBar = {
-            TopAppBar(topAppBarIcon) {navController.navigate(topAppBarOnClicked)}
+            TopAppBar(topAppBarIcon) { topAppBarOnClicked() }
         }
     ) { innerPadding ->
         NavHost(
