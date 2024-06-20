@@ -1,3 +1,82 @@
 <resources>
-    <string name="app_name">Flash Card App</string>
+    <string name="app_name">Flashard</string>
+
+    // Top App Bar Button
+    <string name="top_app_bar_user_profile_button">User Profile Button</string>
+    <string name="top_app_bar_home_button">Home Button</string>
+
+    // Home Screen
+    <string name="nav_home_title">Home</string>
+    <string name="home_screen_welcome_phrase">Welcome Back!</string>
+    <string name="home_screen_start_button">Start Learning!</string>
+
+    // Deck List Screen
+    <string name="nav_deck_list_title">Deck List</string>
+
+    // User Profile Screen
+    <string name="nav_user_profile_title">User Profile</string>
+    <string name="user_profile_picture">User Profile Picture</string>
+    <string name="user_name">Yakashi Valeroni</string>
+
+    // Motivation
+    <string name="motivation_author_format">- %s</string>
+    <string name="motivation_1_phrase">The only place where success comes before work is in the dictionary."</string>
+    <string name="motivation_1_author">Vidal Sassoon</string>
+
+    <string name="motivation_2_phrase">Dreams don\'t work unless you do."</string>
+    <string name="motivation_2_author">John C. Maxwell</string>
+
+    <string name="motivation_3_phrase">Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful."</string>
+    <string name="motivation_3_author">Albert Schweitzer</string>
+
+    <string name="motivation_4_phrase">Hard work beats talent when talent doesn’t work hard."</string>
+    <string name="motivation_4_author">Tim Notke</string>
+
+    <string name="motivation_5_phrase">The harder you work for something, the greater you\'ll feel when you achieve it."</string>
+    <string name="motivation_5_author">Anonymous</string>
+
+    <string name="motivation_6_phrase">Don\'t watch the clock; do what it does. Keep going."</string>
+    <string name="motivation_6_author">Sam Levenson</string>
+
+    <string name="motivation_7_phrase">Success is the sum of small efforts, repeated day in and day out."</string>
+    <string name="motivation_7_author">Robert Collier</string>
+
+    <string name="motivation_8_phrase">Opportunity is missed by most people because it is dressed in overalls and looks like work."</string>
+    <string name="motivation_8_author">Thomas Edison</string>
+
+    <string name="motivation_9_phrase">The road to success and the road to failure are almost exactly the same."</string>
+    <string name="motivation_9_author">Colin R. Davis</string>
+
+    <string name="motivation_10_phrase">Perseverance is not a long race; it is many short races one after the other."</string>
+    <string name="motivation_10_author">Walter Elliot</string>
+
+    <string name="motivation_11_phrase">Do something today that your future self will thank you for."</string>
+    <string name="motivation_11_author">Anonymous</string>
+
+    <string name="motivation_12_phrase">Great things never come from comfort zones."</string>
+    <string name="motivation_12_author">Anonymous</string>
+
+    <string name="motivation_13_phrase">Success usually comes to those who are too busy to be looking for it."</string>
+    <string name="motivation_13_author">Henry David Thoreau</string>
+
+    <string name="motivation_14_phrase">What comes easy won’t last long, and what lasts long won’t come easy."</string>
+    <string name="motivation_14_author">Anonymous</string>
+
+    <string name="motivation_15_phrase">Strive not to be a success, but rather to be of value."</string>
+    <string name="motivation_15_author">Albert Einstein</string>
+
+    <string name="motivation_16_phrase">Work hard in silence, let your success be your noise."</string>
+    <string name="motivation_16_author">Anonymous</string>
+
+    <string name="motivation_17_phrase">The difference between the impossible and the possible lies in a person’s determination."</string>
+    <string name="motivation_17_author">Tommy Lasorda</string>
+
+    <string name="motivation_18_phrase">Don\'t limit your challenges; challenge your limits.</string>
+    <string name="motivation_18_author">Anonymous</string>
+
+    <string name="motivation_19_phrase">Your hard work might not pay off immediately, but it will pay off eventually."</string>
+    <string name="motivation_19_author">Anonymous</string>
+
+    <string name="motivation_20_phrase">The only limit to our realization of tomorrow will be our doubts of today."</string>
+    <string name="motivation_20_author">Franklin D. Roosevelt</string>
 </resources>
