@@ -66,6 +66,9 @@ dependencies {
     // Splash Screen
     implementation(libs.splashscreen)
 
+    // Navigation
+    implementation(libs.navigation)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.preference.PreferenceManager
-import com.example.flashcardapp.ui.HomeScreen
 import com.example.flashcardapp.ui.theme.FlashCardAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,8 +11,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Initialize SharedPreference
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         setContent {
             FlashCardAppTheme {
