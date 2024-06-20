@@ -66,13 +66,6 @@ dependencies {
     // Splash Screen
     implementation(libs.splashscreen)
 
-    // Navigation
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.navigation.compose)
-
-    // SharedPreference
-    implementation(libs.sharedpreference)
-
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
