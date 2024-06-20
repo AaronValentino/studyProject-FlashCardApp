@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Flashard</string>
+
+    // Home Screen
+    <string name="home_screen_welcome_phrase">おかえり~</string>
+    <string name="home_screen_start_button">勉強やるぞ！</string>
+</resources>
