@@ -2,7 +2,110 @@
 <resources>
     <string name="app_name">Flashard</string>
 
-    // Home Screen
-    <string name="home_screen_welcome_phrase">おかえり~</string>
+    <!-- Top App Bar Button -->
+    <string name="top_app_bar_user_profile_button">ユーザープロフィールボタン</string>
+    <string name="top_app_bar_home_button">ホームボタン</string>
+
+    <!-- Home Screen -->
+    <string name="nav_home_title">ホーム</string>
+    <!-- For Home Screen's "Welcome Back Phrases", refer to below -->
     <string name="home_screen_start_button">勉強やるぞ！</string>
+
+    <!-- Deck List Screen -->
+    <string name="nav_deck_list_title">デッキリスト</string>
+
+    <!-- Deck Page Screen -->
+    <string name="nav_deck_page_title">デッキページ</string>
+
+    <!-- Card List Screen -->
+    <string name="nav_card_list_title">カードリスト</string>
+
+    <!--  Card List Screen -->
+    <string name="nav_card_study_mode_title">カード - 勉強モード</string>
+
+    <!-- User Profile Screen -->
+    <string name="nav_user_profile_title">ユーザープロフィール</string>
+    <string name="user_profile_picture">ユーザープロフィール写真</string>
+    <string name="user_name">ヤカシ ヴァレロニ</string>
+
+    <!-- Motivation -->
+    <string name="motivation_author_format">- %s</string>
+    <string name="motivation_1_phrase">「成功が仕事の前に来る唯一の場所は辞書の中だ。」</string>
+    <string name="motivation_1_author">ヴィダル・サスーン</string>
+
+    <string name="motivation_2_phrase">「あなたが働かない限り、夢は叶わない。」</string>
+    <string name="motivation_2_author">ジョン・C・マクスウェル</string>
+
+    <string name="motivation_3_phrase">「成功は幸福の鍵ではない。幸福が成功の鍵である。自分のしていることを愛しているなら、成功するだろう。」</string>
+    <string name="motivation_3_author">アルベルト・シュヴァイツァー</string>
+
+    <string name="motivation_4_phrase">「才能が一生懸命に努力しないと、努力が才能に勝る。」</string>
+    <string name="motivation_4_author">ティム・ノットケ</string>
+
+    <string name="motivation_5_phrase">「何かに対して一生懸命働けば働くほど、それを達成したときの喜びは大きくなる。」</string>
+    <string name="motivation_5_author">匿名</string>
+
+    <string name="motivation_6_phrase">「時計を見るな、時計がすることをしろ。進み続けろ。」</string>
+    <string name="motivation_6_author">サム・レヴィンソン</string>
+
+    <string name="motivation_7_phrase">「成功は小さな努力の積み重ねであり、それが毎日繰り返される。」</string>
+    <string name="motivation_7_author">ロバート・コリアー</string>
+
+    <string name="motivation_8_phrase">「多くの人がチャンスを逃すのは、それが作業着を着ていて、仕事のように見えるからだ。」</string>
+    <string name="motivation_8_author">トーマス・エジソン</string>
+
+    <string name="motivation_9_phrase">「成功への道と失敗への道はほぼ同じである。」</string>
+    <string name="motivation_9_author">コリン・R・デイビス</string>
+
+    <string name="motivation_10_phrase">「忍耐は一つの長いレースではなく、多くの短いレースの連続である。」</string>
+    <string name="motivation_10_author">ウォルター・エリオット</string>
+
+    <string name="motivation_11_phrase">「今日、未来の自分が感謝することをしなさい。」</string>
+    <string name="motivation_11_author">匿名</string>
+
+    <string name="motivation_12_phrase">「偉大なことは快適な場所からは生まれない。」</string>
+    <string name="motivation_12_author">匿名</string>
+
+    <string name="motivation_13_phrase">「成功は通常、それを探している暇がない人に訪れる。」</string>
+    <string name="motivation_13_author">ヘンリー・デイヴィッド・ソロー</string>
+
+    <string name="motivation_14_phrase">「簡単に手に入るものは長続きしないし、長続きするものは簡単には手に入らない。」</string>
+    <string name="motivation_14_author">匿名</string>
+
+    <string name="motivation_15_phrase">「成功を目指すのではなく、価値ある人間になることを目指しなさい。」</string>
+    <string name="motivation_15_author">アルベルト・アインシュタイン</string>
+
+    <string name="motivation_16_phrase">「黙って一生懸命働き、成功があなたの声となるようにしなさい。」</string>
+    <string name="motivation_16_author">匿名</string>
+
+    <string name="motivation_17_phrase">「不可能と可能の違いは、その人の決意にある。」</string>
+    <string name="motivation_17_author">トミー・ラソーダ</string>
+
+    <string name="motivation_18_phrase">「挑戦を制限するな、自分の限界に挑戦しろ。」</string>
+    <string name="motivation_18_author">匿名</string>
+
+    <string name="motivation_19_phrase">「あなたの努力はすぐには報われないかもしれないが、いずれ報われるだろう。」</string>
+    <string name="motivation_19_author">匿名</string>
+
+    <string name="motivation_20_phrase">明日の実現の唯一の限界は、今日の疑念です。</string>
+    <string name="motivation_20_author">フランクリン・D・ルーズベルト</string>
+
+    <!-- Home Screen multilingual phrases -->
+    <string name="home_screen_welcome_phrase_arabic">مرحبًا بعودتك!</string>
+    <string name="home_screen_welcome_phrase_chinese_simplified">欢迎回来!</string>
+    <string name="home_screen_welcome_phrase_dutch">Welkom terug!</string>
+    <string name="home_screen_welcome_phrase_english">Welcome Back!</string>
+    <string name="home_screen_welcome_phrase_french">Bon retour !</string>
+    <string name="home_screen_welcome_phrase_german">Willkommen zurück!</string>
+    <string name="home_screen_welcome_phrase_greek">Καλώς ήρθες πίσω!</string>
+    <string name="home_screen_welcome_phrase_hebrew">ברוך שובך!</string>
+    <string name="home_screen_welcome_phrase_hindi">आपका स्वागत है!</string>
+    <string name="home_screen_welcome_phrase_italian">Bentornato!</string>
+    <string name="home_screen_welcome_phrase_japanese">おかえりなさい!</string>
+    <string name="home_screen_welcome_phrase_korean">환영합니다!</string>
+    <string name="home_screen_welcome_phrase_portuguese">Bem-vindo de volta!</string>
+    <string name="home_screen_welcome_phrase_russian">Добро пожаловать обратно!</string>
+    <string name="home_screen_welcome_phrase_spanish">¡Bienvenido de nuevo!</string>
+    <string name="home_screen_welcome_phrase_swedish">Välkommen tillbaka!</string>
+    <string name="home_screen_welcome_phrase_turkish">Tekrar hoş geldiniz!</string>
 </resources>
