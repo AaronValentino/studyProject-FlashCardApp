@@ -5,8 +5,9 @@ data class Card(
     val answer: String
 )
 
-object CardsData {
-    val deck = (1..100).map {
+fun createCardsData(maxCard: Int): List<Card> {
+    val maxRandNum = (1..maxCard).random()
+    return (1..maxRandNum).map {
         Card("Question $it", "Answer $it")
     }
 }
