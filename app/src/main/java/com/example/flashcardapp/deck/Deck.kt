@@ -27,5 +27,5 @@ fun createDeck(): Deck {
     deckCount++
     val deckID = deckCount
 
-    return Deck(deckID, "Deck $deckID", createCardsData(1))
+    return Deck(deckID, "Deck $deckID", createCardsData(30))
 }
