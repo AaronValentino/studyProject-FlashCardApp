@@ -128,7 +128,8 @@ fun UserProfileScreen() {
                             ),
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            textAlign = TextAlign.End
+                            textAlign = TextAlign.End,
+                            fontSize = 16.sp
                         )
                     }
                 }
