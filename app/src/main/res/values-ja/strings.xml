@@ -2,6 +2,9 @@
 <resources>
     <string name="app_name">Flashard</string>
 
+    <!-- Welcome Screen -->
+    <string name="welcome_screen_press_to_continue">続行するにはどこかを押してください</string>
+
     <!-- Top App Bar Button -->
     <string name="top_app_bar_user_profile_button">ユーザープロフィールボタン</string>
     <string name="top_app_bar_home_button">ホームボタン</string>
@@ -90,7 +93,7 @@
     <string name="motivation_20_phrase">明日の実現の唯一の限界は、今日の疑念です。</string>
     <string name="motivation_20_author">フランクリン・D・ルーズベルト</string>
 
-    <!-- Home Screen multilingual phrases -->
+    <!-- Welcome Screen multilingual phrases -->
     <string name="home_screen_welcome_phrase_arabic">مرحبًا بعودتك!</string>
     <string name="home_screen_welcome_phrase_chinese_simplified">欢迎回来!</string>
     <string name="home_screen_welcome_phrase_dutch">Welkom terug!</string>
