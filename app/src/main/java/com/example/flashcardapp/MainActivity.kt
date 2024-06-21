@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.flashcardapp.ui.FlashardApp
 import com.example.flashcardapp.ui.theme.FlashCardAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,12 +12,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
         setContent {
             FlashCardAppTheme {
                 FlashardApp()
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        finish()
     }
 }
 

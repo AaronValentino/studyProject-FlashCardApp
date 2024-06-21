@@ -1,4 +1,4 @@
-package com.example.flashcardapp.ui
+package com.example.flashcardapp.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,13 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flashcardapp.R
 
 @Composable
 fun HomeScreen(
-    homeScreenWelcomePhrase: Int,
     onButtonClicked: () -> Unit
 ) {
     Column(
@@ -47,17 +47,22 @@ fun HomeScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = stringResource(id = homeScreenWelcomePhrase),
+                    text = "Home Screen",
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 40.sp,
                     fontWeight = FontWeight.Normal,
-                    letterSpacing = (-2).sp,
-                    color = MaterialTheme.colorScheme.primary
+                    letterSpacing = 0.sp,
+                    lineHeight = 40.sp,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(16.dp)
                 )
             }
         }
         ElevatedButton(
-            onClick = onButtonClicked,
+            onClick = {
+                onButtonClicked()
+            },
             modifier = Modifier.padding(20.dp),
             colors = ButtonDefaults.elevatedButtonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
