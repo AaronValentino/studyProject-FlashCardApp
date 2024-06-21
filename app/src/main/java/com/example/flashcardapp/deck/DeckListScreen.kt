@@ -23,10 +23,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.flashcardapp.card.CardsData
 
 @Composable
-fun DeckListScreen(onClicked: () -> Unit) {
+fun DeckListScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -35,7 +34,7 @@ fun DeckListScreen(onClicked: () -> Unit) {
             columns = GridCells.Adaptive(minSize = 150.dp),
             contentPadding = PaddingValues(20.dp)
         ) {
-            items(CardsData.deck) {
+            items(Deck1.deck.deckCards) {
                 var print by rememberSaveable {
                     mutableStateOf(it.question)
                 }
