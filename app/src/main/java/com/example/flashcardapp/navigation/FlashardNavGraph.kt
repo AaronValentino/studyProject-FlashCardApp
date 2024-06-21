@@ -26,7 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,8 +33,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.flashcardapp.R
+import com.example.flashcardapp.card.CardListScreen
+import com.example.flashcardapp.deck.Deck1
 import com.example.flashcardapp.deck.DeckListScreen
-import com.example.flashcardapp.ui.HomeScreen
+import com.example.flashcardapp.ui.home.HomeScreen
 import com.example.flashcardapp.user.UserProfileScreen
 
 // Navigation Graph
@@ -48,7 +49,7 @@ fun FlashardNavHost(
     val backgroundBrush = Brush.verticalGradient(
         listOf(
             MaterialTheme.colorScheme.primary,
-            Color.White
+            MaterialTheme.colorScheme.background
         )
     )
 
@@ -57,6 +58,7 @@ fun FlashardNavHost(
         mutableStateOf(Screen_Home.route)
     }
 
+    // TopAppBar Route
     val topAppBarOnClickedUserProfile: () -> Unit = {
         navController.navigate(Screen_UserProfile.route)
     }
@@ -74,7 +76,7 @@ fun FlashardNavHost(
 
     Scaffold(
         topBar = {
-            TopAppBar(topAppBarIcon) { topAppBarOnClicked() }
+            TopAppBar(topAppBarIcon = topAppBarIcon) { topAppBarOnClicked() }
         }
     ) { innerPadding ->
         NavHost(
@@ -84,21 +86,21 @@ fun FlashardNavHost(
                 .padding(innerPadding)
                 .background(brush = backgroundBrush)
         ) {
-            composable(route = Screen_Home.route, content = {
+            composable(route = Screen_Home.route) {
                 topAppBarIcon = Screen_Home.route
-                HomeScreen(
-                    homeScreenWelcomePhrase = R.string.home_screen_welcome_phrase,
-                    onButtonClicked = {
-                        navController.navigate(Screen_DeckList.route)
-                    }
-                )
-            })
+                HomeScreen( onButtonClicked = { navController.navigate(Screen_DeckList.route) } )
+            }
             composable(route = Screen_DeckList.route) {
                 topAppBarIcon = Screen_DeckList.route
-                DeckListScreen(
-                    onClicked = {
-                    }
-                )
+                DeckListScreen()
+            }
+            composable(route = Screen_DeckPage.route) {
+            }
+            composable(route = Screen_CardList.route) {
+                CardListScreen(
+                    deckName = Deck1.deck.deckName,
+                    deckCards = Deck1.deck.deckCards
+                ) {topAppBarIcon = it}
             }
             composable(route = Screen_UserProfile.route) {
                 topAppBarIcon = Screen_UserProfile.route
@@ -111,6 +113,7 @@ fun FlashardNavHost(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
+    titleText: String = stringResource(id = R.string.app_name),
     topAppBarIcon: String,
     onButtonClicked: () -> Unit
 ) {
@@ -120,7 +123,7 @@ fun TopAppBar(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(id = R.string.app_name),
+                    text = titleText,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
