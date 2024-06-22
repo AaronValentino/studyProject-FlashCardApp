@@ -1,6 +1,8 @@
 package com.example.flashcardapp.user
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,13 +16,21 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +40,15 @@ import com.example.flashcardapp.R
 
 @Composable
 fun UserProfileScreen() {
+    val context = LocalContext.current
+    var nameInEditMode by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var userName = stringResource(id = R.string.user_name)
+    var userNameToChange by rememberSaveable {
+        mutableStateOf(userName)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -67,20 +86,81 @@ fun UserProfileScreen() {
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp),
+                        .padding(start = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.user_name)
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(
-                        imageVector = Icons.Default.Face,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .sizeIn(minHeight = 40.dp)
-                            .aspectRatio(1f)
-                    )
+                    if (nameInEditMode) {
+                        OutlinedTextField(
+                            value = userNameToChange,
+                            onValueChange = {
+                                if (userNameToChange.length > 15) {
+                                    userNameToChange = userName
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.warning_username_too_long),
+                                        Toast.LENGTH_SHORT)
+                                        .show()
+                                } else {
+                                    userNameToChange = it
+                                }
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(R.string.text_field_label, userName, "<"),
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            },
+                            textStyle = MaterialTheme.typography.bodyMedium
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable {
+                                    if (userNameToChange.length > 15) {
+                                        userNameToChange = userName
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                context.getString(R.string.warning_invalid_username),
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
+                                    } else {
+                                        userName = userNameToChange
+                                        nameInEditMode = false
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                context.getString(R.string.success_username_changed),
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
+                                    }
+                                }
+                                .sizeIn(minHeight = 40.dp)
+                                .aspectRatio(1f)
+                                .padding(end = 12.dp)
+                        )
+                    } else {
+                        Text(
+                            text = userName,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable {
+                                    nameInEditMode = true
+                                }
+                                .sizeIn(minHeight = 40.dp)
+                                .aspectRatio(1f)
+                                .padding(vertical = 12.dp)
+                        )
+                    }
                 }
             }
             ElevatedCard(

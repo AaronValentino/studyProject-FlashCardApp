@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Flashard</string>
 
@@ -29,6 +30,10 @@
     <string name="nav_user_profile_title">User Profile</string>
     <string name="user_profile_picture">User Profile Picture</string>
     <string name="user_name">Yakashi Valeroni</string>
+    <string name="warning_username_too_long">Username too long!</string>
+    <string name="text_field_label">%s, New username length %s 25 letters</string>
+    <string name="warning_invalid_username">Invalid Username</string>
+    <string name="success_username_changed">Username changed successfully</string>
 
     <!-- Motivation -->
     <string name="motivation_author_format">- %s</string>

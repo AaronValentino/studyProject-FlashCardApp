@@ -30,6 +30,10 @@
     <string name="nav_user_profile_title">ユーザープロフィール</string>
     <string name="user_profile_picture">ユーザープロフィール写真</string>
     <string name="user_name">ヤカシ ヴァレロニ</string>
+    <string name="warning_username_too_long">ユーザー名が長すぎます！</string>
+    <string name="text_field_label">%s, 新しい名前の長さ %s 25文字</string>
+    <string name="warning_invalid_username">無効なユーザー名</string>
+    <string name="success_username_changed">ユーザー名が正常に変更されました</string>
 
     <!-- Motivation -->
     <string name="motivation_author_format">- %s</string>
