@@ -18,22 +18,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    override fun onStop() {
-        super.onStop()
-        finish()
-    }
 }
-
-//@Preview(
-//    name = "Light",
-//    showBackground = true,
-//    showSystemUi = true,
-//    uiMode = 0
-//)
-//@Composable
-//fun PreviewApp() {
-//    FlashCardAppTheme {
-//        HomeScreen()
-//    }
-//}
