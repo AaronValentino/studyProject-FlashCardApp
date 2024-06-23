@@ -82,6 +82,7 @@ fun FlashardNavHost(
                         titleText = stringResource(id = R.string.nav_user_profile_title),
                         iconImageVector = Icons.Filled.Home,
                         iconContentDescription = stringResource(id = R.string.top_app_bar_home_button),
+                        iconPadding = 2,
                         onButtonClicked = {
                             navController.navigate(Home)
                         }
@@ -99,6 +100,7 @@ fun TopAppBarWithIcon(
     titleText: String,
     iconImageVector: ImageVector,
     iconContentDescription: String,
+    iconPadding: Int = 0,
     onButtonClicked: () -> Unit
 ) {
     CenterAlignedTopAppBar(
@@ -129,7 +131,7 @@ fun TopAppBarWithIcon(
                         contentDescription = iconContentDescription,
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
-                            .padding(top = 4.dp)
+                            .padding(top = (4 + iconPadding).dp)
                             .clickable { onButtonClicked() }
                             .sizeIn(minWidth = 50.dp, minHeight = 55.dp),
                     )
