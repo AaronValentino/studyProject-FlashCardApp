@@ -1,39 +1,21 @@
 package com.example.flashcardapp.navigation
 
-import com.example.flashcardapp.R
+import kotlinx.serialization.Serializable
 
-interface NavigationDestination {
-    val route: String
-    val titleRes: Int
-}
+@Serializable
+object Home
 
-object Screen_Home : NavigationDestination {
-    override val route = "home"
-    override val titleRes = R.string.nav_home_title
-}
+@Serializable
+object DeckList
 
-object Screen_DeckList : NavigationDestination {
-    override val route = "deck_list"
-    override val titleRes = R.string.nav_deck_list_title
-}
+@Serializable
+object SelectedDeckPage
 
-object Screen_DeckPage : NavigationDestination {
-    override val route = "deck_page"
-    override val titleRes = R.string.nav_deck_page_title
-}
+@Serializable
+object CardQuiz
 
-object Screen_Card_StudyMode : NavigationDestination {
-    override val route = "card_study_mode"
-    override val titleRes = R.string.nav_card_study_mode_title
-}
+@Serializable
+object CardList
 
-object Screen_CardList : NavigationDestination {
-    override val route = "card_"
-    override val titleRes = R.string.nav_card_list_title
-}
-
-
-object Screen_UserProfile : NavigationDestination {
-    override val route = "user_profile"
-    override val titleRes = R.string.nav_user_profile_title
-}
+@Serializable
+object UserProfile
