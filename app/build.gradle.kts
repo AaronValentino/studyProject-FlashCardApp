@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -67,8 +68,11 @@ dependencies {
     // Splash Screen
     implementation(libs.splashscreen)
 
-    // Navigation
-    implementation(libs.navigation)
+    // Compose Navigation
+    implementation(libs.compose.navigation)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // Room Database
     implementation(libs.room.runtime)
