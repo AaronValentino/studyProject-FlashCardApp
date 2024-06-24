@@ -1,31 +1,32 @@
-package com.example.flashcardapp.deck
+package com.example.flashcardapp.data
 
-import com.example.flashcardapp.card.Card
-import com.example.flashcardapp.card.createCardsData
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-private var deckCount = 0
-
+@Entity(tableName = "decks")
 data class Deck(
-    val deckID: Int,
-    val deckName: String,
-    val deckCards: List<Card>
+    @PrimaryKey(autoGenerate = true) val deckId: Int = 0,
+    val name: String,
+    val description: String,
+    val numOfCards: Int
 )
 
-object Deck1 {
-    val deck: Deck = createDeck()
-}
-
-object Deck2 {
-    val deck: Deck = createDeck()
-}
-
-object Deck3 {
-    val deck: Deck = createDeck()
-}
-
-fun createDeck(): Deck {
-    deckCount++
-    val deckID = deckCount
-
-    return Deck(deckID, "Deck $deckID", createCardsData(30))
-}
+//private var deckCount = 0
+//object Deck1 {
+//    val deck: Deck = createDeck()
+//}
+//
+//object Deck2 {
+//    val deck: Deck = createDeck()
+//}
+//
+//object Deck3 {
+//    val deck: Deck = createDeck()
+//}
+//
+//fun createDeck(): Deck {
+//    deckCount++
+//    val deckID = deckCount
+//
+//    return Deck(deckID, "Deck $deckID", createCardsData(30))
+//}
