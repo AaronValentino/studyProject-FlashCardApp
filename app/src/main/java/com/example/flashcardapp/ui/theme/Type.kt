@@ -23,6 +23,13 @@ val Typography = Typography(
         lineHeight = 28.sp,
         letterSpacing = (-1).sp
     ),
+    displaySmall = TextStyle(
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 40.sp,
+        lineHeight = 44.sp,
+        letterSpacing = 1.sp
+    ),
     bodyLarge = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.SemiBold,
