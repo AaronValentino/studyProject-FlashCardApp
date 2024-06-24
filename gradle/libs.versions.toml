@@ -11,8 +11,8 @@ composeBom = "2024.06.00"
 splashScreen = "1.0.1"
 room_version = "2.6.1"
 ksp = "2.0.0-1.0.22"
-composeNavigation = "2.8.0-alpha08"
-serialization = "1.6.3"
+composeNavigation = "2.8.0-beta03"
+serialization = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
