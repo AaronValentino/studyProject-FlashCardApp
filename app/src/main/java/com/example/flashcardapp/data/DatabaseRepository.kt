@@ -1,6 +1,7 @@
 package com.example.flashcardapp.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 
 interface DeckNCardRepository {
 
@@ -20,10 +21,11 @@ interface DeckNCardRepository {
 
     suspend fun deleteDeck(deck: Deck)
 
-    fun getIndividualDeckStream(deckId: Int): Flow<Deck?>
+    fun getIndividualDeckStream(deckId: Int): Flow<Deck>
 
     fun getAllDecksStream(): Flow<List<Deck>>
 
+    fun getCombinedDeckCardsStream(deckId: Int): Flow<DeckCards>
 }
 
 class LocalDeckNCardRepository(
@@ -45,7 +47,21 @@ class LocalDeckNCardRepository(
 
     override suspend fun deleteDeck(deck: Deck) = deckDao.delete(deck)
 
-    override fun getIndividualDeckStream(deckId: Int): Flow<Deck?> = deckDao.getIndividualDeck(deckId)
+    override fun getIndividualDeckStream(deckId: Int): Flow<Deck> = deckDao.getIndividualDeck(deckId)
 
     override fun getAllDecksStream(): Flow<List<Deck>> =deckDao.getAllDecks()
+
+    override fun getCombinedDeckCardsStream(deckId: Int): Flow<DeckCards> {
+        val deckFlow = getIndividualDeckStream(deckId)
+        val cardsFlow = getAllDeckCardsStream(deckId)
+
+        return deckFlow.combine(cardsFlow) { deck, cards ->
+            DeckCards(deck, cards)
+        }
+    }
 }
+
+data class DeckCards(
+    val deck: Deck,
+    val cards: List<Card>
+)
