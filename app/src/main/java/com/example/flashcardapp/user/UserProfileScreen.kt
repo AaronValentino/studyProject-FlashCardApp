@@ -97,7 +97,7 @@ fun UserProfileScreen(
                 ElevatedCard(
                     modifier = Modifier
                         .sizeIn(minHeight = 48.dp)
-                        .aspectRatio(5f),
+                        .aspectRatio(4.5f),
                     shape = MaterialTheme.shapes.large,
                     elevation = CardDefaults.elevatedCardElevation(
                         defaultElevation = 20.dp
@@ -106,68 +106,65 @@ fun UserProfileScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(start = 16.dp),
+                            .padding(
+                                vertical = 8.dp,
+                                horizontal = 16.dp
+                            ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         if (nameInEditMode) {
                             OutlinedTextField(
                                 value = userNameToChange,
                                 onValueChange = {
+                                    userNameToChange = it
                                     if (userNameToChange.length > 15) {
-                                        userNameToChange = userName
                                         Toast.makeText(
                                             context,
                                             context.getString(R.string.warning_username_too_long),
                                             Toast.LENGTH_SHORT
-                                        )
-                                            .show()
-                                    } else {
-                                        userNameToChange = it
+                                        ).show()
                                     }
                                 },
+                                isError = userNameToChange.length > 15,
                                 label = {
                                     Text(
-                                        text = stringResource(
-                                            R.string.text_field_label,
-                                            userName,
-                                            "<"
-                                        ),
-                                        style = MaterialTheme.typography.bodySmall
+                                        text = stringResource(R.string.text_field_label, "<"),
+                                        style = MaterialTheme.typography.bodyMedium
                                     )
                                 },
-                                textStyle = MaterialTheme.typography.bodyMedium
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
-                            Icon(
-                                imageVector = Icons.Default.CheckCircle,
-                                contentDescription = null,
+                                textStyle = MaterialTheme.typography.bodyMedium,
+                                trailingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.CheckCircle,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .clickable {
+                                                if (userNameToChange.length > 15) {
+                                                    Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.warning_invalid_username),
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                } else {
+                                                    userName = userNameToChange
+                                                    nameInEditMode = false
+                                                    Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.success_username_changed),
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                }
+                                            }
+                                            .sizeIn(minHeight = 32.dp)
+                                            .aspectRatio(1f)
+                                            .padding(bottom = 8.dp)
+                                    )
+                                },
                                 modifier = Modifier
-                                    .clickable {
-                                        if (userNameToChange.length > 15) {
-                                            userNameToChange = userName
-                                            Toast
-                                                .makeText(
-                                                    context,
-                                                    context.getString(R.string.warning_invalid_username),
-                                                    Toast.LENGTH_SHORT
-                                                )
-                                                .show()
-                                        } else {
-                                            userName = userNameToChange
-                                            nameInEditMode = false
-                                            Toast
-                                                .makeText(
-                                                    context,
-                                                    context.getString(R.string.success_username_changed),
-                                                    Toast.LENGTH_SHORT
-                                                )
-                                                .show()
-                                        }
-                                    }
-                                    .sizeIn(minHeight = 40.dp)
-                                    .aspectRatio(1f)
-                                    .padding(end = 12.dp)
+                                    .fillMaxWidth()
+                                    .padding(start = 4.dp)
                             )
+
                         } else {
                             Text(
                                 text = userName,
@@ -181,7 +178,7 @@ fun UserProfileScreen(
                                     .clickable {
                                         nameInEditMode = true
                                     }
-                                    .sizeIn(minHeight = 40.dp)
+                                    .sizeIn(minHeight = 32.dp)
                                     .aspectRatio(1f)
                                     .padding(vertical = 12.dp)
                             )
