@@ -100,13 +100,15 @@ fun FlashardNavHost(
             )
         }
         composable<SelectedDeckPage> {
+            val selectedDeckPage: SelectedDeckPage = it.toRoute()
             Log.d("CheckSavedStateHandle", it.savedStateHandle.toString())
             SelectedDeckPageScreen(
                 onClickedBack = { navController.navigateUp() },
                 onClickedAddNewCard = { deckId, deckName -> navController.navigate(AddNewCard(deckId, deckName)) },
                 onClickedAllCards = {},
                 onClickedLesson = {},
-                backgroundBrush = backgroundBrush
+                backgroundBrush = backgroundBrush,
+                cardsAdded = selectedDeckPage.cardsAdded
             )
         }
         composable<AddNewCard> {
@@ -117,7 +119,13 @@ fun FlashardNavHost(
                 },
                 backgroundBrush = backgroundBrush,
                 deckId = addNewCard.deckId,
-                cancelCreateClicked = { navController.navigateUp() }
+                cancelCreateClicked = { cardsAdded ->
+                    navController.navigateUp()
+                    navController.navigateUp()
+                    navController.navigate(
+                        SelectedDeckPage(addNewCard.deckId, cardsAdded)
+                    )
+                }
             )
         }
         composable<CardList> {
