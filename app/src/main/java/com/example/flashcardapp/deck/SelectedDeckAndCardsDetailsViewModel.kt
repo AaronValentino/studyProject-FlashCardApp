@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 
 class SelectedDeckAndCardsDetailsViewModel(
     savedStateHandle: SavedStateHandle,
-    deckNCardRepository: DeckNCardRepository
+    private val deckNCardRepository: DeckNCardRepository
 ) : ViewModel() {
     val deckId: Int = checkNotNull(savedStateHandle["deckId"])
 
@@ -33,6 +33,21 @@ class SelectedDeckAndCardsDetailsViewModel(
                 )
             )
         )
+
+    suspend fun updateDeckDetails(
+        newName: String,
+        newDescription: String,
+        numOfCards: Int
+    ) {
+        deckNCardRepository.updateDeck(
+            Deck(
+                deckId = deckId,
+                name = newName,
+                description = newDescription,
+                numOfCards = numOfCards
+            )
+        )
+    }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L

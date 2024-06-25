@@ -103,7 +103,6 @@ fun FlashardNavHost(
             Log.d("CheckSavedStateHandle", it.savedStateHandle.toString())
             SelectedDeckPageScreen(
                 onClickedBack = { navController.navigateUp() },
-                onClickedEditDeck = {},
                 onClickedAddNewCard = { deckId, deckName -> navController.navigate(AddNewCard(deckId, deckName)) },
                 onClickedAllCards = {},
                 onClickedLesson = {},

@@ -29,6 +29,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -40,6 +42,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,23 +50,27 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.ui.theme.Shape
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun SelectedDeckPageScreen(
     backgroundBrush: Brush,
     onClickedBack: () -> Unit,
-    onClickedEditDeck: () -> Unit,
     onClickedAddNewCard: (Int, String) -> Unit,
     onClickedAllCards: () -> Unit,
     onClickedLesson: () -> Unit,
@@ -80,6 +87,33 @@ fun SelectedDeckPageScreen(
             repeatMode = RepeatMode.Reverse
         ), label = ""
     )
+
+    var editDeckDetails by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+
+    if (editDeckDetails) {
+        EditDeckDetails(
+            confirmEditDeckDetailsClicked = { newTitle, newDescription ->
+                coroutineScope.launch {
+                    viewModel.updateDeckDetails(
+                        newName = newTitle,
+                        newDescription = newDescription,
+                        numOfCards = uiState.value.deckCards.size
+                    )
+                    delay(1000L)
+                    editDeckDetails = false
+                }
+            },
+            dismissEditDeckDetailsClicked = {
+                editDeckDetails = false
+            },
+            oldDeckName = uiState.value.selectedDeck.name,
+            oldDeckDescription = uiState.value.selectedDeck.description
+        )
+    }
 
     Scaffold { paddingValues ->
         Box(
@@ -150,7 +184,7 @@ fun SelectedDeckPageScreen(
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     if (uiState.value.deckCards.isEmpty()) {
-                        AddNewCard(
+                        NoCardsAddNewCard(
                             infiniteRotationColor = infiniteRotationColor,
                             onClickedAddNewCard = {
                                 onClickedAddNewCard(
@@ -216,14 +250,14 @@ fun SelectedDeckPageScreen(
                 )
             }
             FloatingActionButton(
-                onClick = onClickedEditDeck,
+                onClick = { editDeckDetails = true },
                 modifier = Modifier
                     .padding(20.dp)
                     .align(Alignment.TopEnd)
             ) {
                 Icon(
                     imageVector = Icons.Filled.Edit,
-                    contentDescription = "Close Button",
+                    contentDescription = "Edit Deck Details Button",
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -232,7 +266,119 @@ fun SelectedDeckPageScreen(
 }
 
 @Composable
-fun AddNewCard(
+fun EditDeckDetails(
+    confirmEditDeckDetailsClicked: (String, String) -> Unit,
+    dismissEditDeckDetailsClicked: () -> Unit,
+    oldDeckName: String,
+    oldDeckDescription: String
+) {
+    var editDeckName by rememberSaveable {
+        mutableStateOf(oldDeckName)
+    }
+    var editDeckDescription by rememberSaveable {
+        mutableStateOf(oldDeckDescription)
+    }
+
+    Dialog(onDismissRequest = dismissEditDeckDetailsClicked) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .aspectRatio(0.7f)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1.5f)
+                ) {
+                    OutlinedTextField(
+                        value = editDeckName,
+                        onValueChange = { editDeckName = it },
+                        label = {
+                            if (editDeckName.length > 25) {
+                                Text(
+                                    text = "New deck's name is too long!",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            } else {
+                                Text(
+                                    text = "New deck's name",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        },
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxSize(),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                        isError = editDeckName.length > 25
+                    )
+                }
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(2f)
+                ) {
+                    OutlinedTextField(
+                        value = editDeckDescription,
+                        onValueChange = { editDeckDescription = it },
+                        keyboardActions = KeyboardActions(),
+                        label = {
+                            if (editDeckDescription.length > 100) {
+                                Text(
+                                    text= "New deck's description is too long!",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            } else {
+                                Text(
+                                    text= "New deck's description (Optional)",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        },
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxSize(),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                        isError = editDeckDescription.length > 100
+                    )
+                }
+                Spacer(modifier = Modifier.weight(0.25f))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    ElevatedButton(onClick = dismissEditDeckDetailsClicked) {
+                        Text("Cancel")
+                    }
+                    ElevatedButton(
+                        onClick = {
+                            confirmEditDeckDetailsClicked(editDeckName, editDeckDescription)
+                        },
+                        enabled = (
+                                editDeckName.length <= 25 &&
+                                editDeckDescription.length <= 50 &&
+                                ((editDeckName != oldDeckName) || (editDeckDescription != oldDeckDescription))
+                        )
+                    ) {
+                        Text("Done")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun NoCardsAddNewCard(
     infiniteRotationColor: State<Color>,
     onClickedAddNewCard: () -> Unit
 ) {
