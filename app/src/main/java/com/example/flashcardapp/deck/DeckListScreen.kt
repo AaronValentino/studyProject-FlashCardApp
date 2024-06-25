@@ -99,7 +99,8 @@ private fun GenerateCard(
                 .clickable(onClick = cardClicked)
                 .fillMaxSize()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center // Remove this if the lines of code below are reactivated
         ) {
             Text(
                 text = deckName,
@@ -109,7 +110,7 @@ private fun GenerateCard(
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "$numOfCards cards",
+                text = "${ if (numOfCards == 0) "" else numOfCards }",
                 style = MaterialTheme1.typography.bodyMedium
             )
         }
