@@ -148,7 +148,7 @@ fun AddNewDeckScreen(
                     }
                     ElevatedButton(
                         onClick = { createNewDeck = true },
-                        enabled = (deckName.length <= 25 && deckDescription.length <= 50)
+                        enabled = (deckName.length <= 25 && deckDescription.length <= 100)
                     ) {
                         Text(text = "Create")
                     }
