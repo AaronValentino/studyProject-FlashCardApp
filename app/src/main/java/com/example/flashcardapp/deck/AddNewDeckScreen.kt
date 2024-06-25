@@ -35,6 +35,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.data.Deck
+import com.example.flashcardapp.data.DeckConstant.DECKDESCRIPTIONLENGTH
+import com.example.flashcardapp.data.DeckConstant.DECKNAMELENGTH
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -88,7 +90,7 @@ fun AddNewDeckScreen(
                         value = deckName,
                         onValueChange = { deckName = it },
                         label = {
-                            if (deckName.length > 25) {
+                            if (deckName.length > DECKNAMELENGTH) {
                                 Text(
                                     text = "New deck's name is too long!",
                                     style = MaterialTheme.typography.bodyMedium
@@ -104,7 +106,7 @@ fun AddNewDeckScreen(
                             .padding(16.dp)
                             .fillMaxSize(),
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                        isError = deckName.length > 25
+                        isError = deckName.length > DECKNAMELENGTH
                     )
                 }
                 Card(
@@ -117,7 +119,7 @@ fun AddNewDeckScreen(
                         onValueChange = { deckDescription = it },
                         keyboardActions = KeyboardActions(),
                         label = {
-                            if (deckDescription.length > 100) {
+                            if (deckDescription.length > DECKDESCRIPTIONLENGTH) {
                                 Text(
                                     text= "New deck's description is too long!",
                                     style = MaterialTheme.typography.bodyMedium
@@ -133,7 +135,7 @@ fun AddNewDeckScreen(
                             .padding(16.dp)
                             .fillMaxSize(),
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        isError = deckDescription.length > 100
+                        isError = deckDescription.length > DECKDESCRIPTIONLENGTH
                     )
                 }
                 Spacer(modifier = Modifier.weight(2f))
@@ -148,7 +150,7 @@ fun AddNewDeckScreen(
                     }
                     ElevatedButton(
                         onClick = { createNewDeck = true },
-                        enabled = (deckName.length <= 25 && deckDescription.length <= 100)
+                        enabled = (deckName.length <= DECKNAMELENGTH && deckDescription.length <= DECKDESCRIPTIONLENGTH)
                     ) {
                         Text(text = "Create")
                     }

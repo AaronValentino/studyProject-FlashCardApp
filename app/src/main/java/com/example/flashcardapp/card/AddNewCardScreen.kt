@@ -23,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.data.CardConstant.CARDANSWERLENGTH
+import com.example.flashcardapp.data.CardConstant.CARDQUESTIONLENGTH
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,8 +49,12 @@ fun AddNewCardScreen(
     backgroundBrush: Brush,
     viewModel: AddNewCardViewModel = viewModel(factory = AppViewModelProvider.Factory),
     deckId: Int,
-    cancelCreateClicked: () -> Unit
+    cancelCreateClicked: (Int) -> Unit
 ) {
+    var cardsAdded by rememberSaveable {
+        mutableIntStateOf(0)
+    }
+
     Log.d("Check Passed in deckId", deckId.toString())
     val context = LocalContext.current
 
@@ -106,7 +113,7 @@ fun AddNewCardScreen(
                             value = currentNewCardQuestion,
                             onValueChange = { currentNewCardQuestion = it },
                             label = {
-                                if (currentNewCardQuestion.length > 100) {
+                                if (currentNewCardQuestion.length > CARDQUESTIONLENGTH) {
                                     contentError = true
                                     Text(
                                         text = "Question is too long!",
@@ -130,7 +137,7 @@ fun AddNewCardScreen(
                                 .padding(16.dp)
                                 .fillMaxSize(),
                             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                            isError = currentNewCardQuestion.length > 100 || currentNewCardQuestion.isEmpty()
+                            isError = currentNewCardQuestion.length > CARDQUESTIONLENGTH || currentNewCardQuestion.isEmpty()
                         )
                     }
                     Card(
@@ -144,7 +151,7 @@ fun AddNewCardScreen(
                             onValueChange = { currentNewCardAnswer = it },
                             keyboardActions = KeyboardActions(),
                             label = {
-                                if (currentNewCardAnswer.length > 100) {
+                                if (currentNewCardAnswer.length > CARDANSWERLENGTH) {
                                     contentError = true
                                     Text(
                                         text = "Answer is too long!",
@@ -168,7 +175,7 @@ fun AddNewCardScreen(
                                 .padding(16.dp)
                                 .fillMaxSize(),
                             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                            isError = currentNewCardAnswer.length > 100 || currentNewCardAnswer.isEmpty()
+                            isError = currentNewCardAnswer.length > CARDANSWERLENGTH || currentNewCardAnswer.isEmpty()
                         )
                     }
                 }
@@ -204,7 +211,7 @@ fun AddNewCardScreen(
             }
             if (cancelCreateNewCard) {
                 CancelCreateNewDeckDialog(
-                    confirmCancelCreateNewDeckClicked = cancelCreateClicked,
+                    confirmCancelCreateNewDeckClicked = { cancelCreateClicked(cardsAdded) },
                     dismissCancelCreateNewDeckClicked = { cancelCreateNewCard = false }
                 )
             }
