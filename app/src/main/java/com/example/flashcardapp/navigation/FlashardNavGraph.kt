@@ -54,7 +54,7 @@ fun FlashardNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = DeckList
+        startDestination = Home
     ) {
         composable<Home> {
             HomeScreen(
