@@ -1,5 +1,6 @@
 package com.example.flashcardapp.navigation
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,11 +25,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.example.flashcardapp.R
+import com.example.flashcardapp.deck.AddNewDeckScreen
+import com.example.flashcardapp.deck.DeckListScreen
+import com.example.flashcardapp.deck.SelectedDeckPageScreen
 import com.example.flashcardapp.ui.home.HomeScreen
 import com.example.flashcardapp.user.UserProfileScreen
 
@@ -47,7 +53,7 @@ fun FlashardNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = Home
+        startDestination = DeckList
     ) {
         composable<Home> {
             HomeScreen(
@@ -68,8 +74,39 @@ fun FlashardNavHost(
             )
         }
         composable<DeckList> {
+            DeckListScreen(
+                topBar = {
+                    TopAppBarNoIcon(titleText = "Deck List")
+                },
+                backgroundBrush = backgroundBrush,
+                cardClicked = { deckId -> navController.navigate(SelectedDeckPage(deckId)) },
+                addNewDeckClicked = { newDeckId -> navController.navigate(AddNewDeck(newDeckId)) }
+            )
+        }
+        composable<AddNewDeck> {
+            val addNewDeck: AddNewDeck = it.toRoute()
+            AddNewDeckScreen(
+                topBar = {
+                    TopAppBarNoIcon(titleText = "New Deck")
+                },
+                backgroundBrush = backgroundBrush,
+                newDeckCreateClicked = { deckId ->
+                    navController.popBackStack()
+                    navController.navigate(SelectedDeckPage(deckId))
+                },
+                newDeckId = addNewDeck.newDeckId,
+                cancelCreateClicked = { navController.navigateUp() }
+            )
         }
         composable<SelectedDeckPage> {
+            Log.d("CheckSavedStateHandle", it.savedStateHandle.toString())
+            SelectedDeckPageScreen(
+                onClickedBack = { navController.navigateUp() },
+                onClickedEditDeck = {},
+                onClickedAllCards = {},
+                onClickedLesson = {},
+                backgroundBrush = backgroundBrush
+            )
         }
         composable<CardList> {
         }
@@ -136,6 +173,39 @@ fun TopAppBarWithIcon(
                             .sizeIn(minWidth = 50.dp, minHeight = 55.dp),
                     )
                 }
+            }
+        },
+        windowInsets = WindowInsets(top = 40.dp),
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBarNoIcon(
+    titleText: String
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = titleText,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            vertical = 8.dp
+                        ),
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleLarge,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
             }
         },
         windowInsets = WindowInsets(top = 40.dp),
