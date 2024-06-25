@@ -9,7 +9,14 @@ object Home
 object DeckList
 
 @Serializable
-object SelectedDeckPage
+data class SelectedDeckPage(
+    val deckId: Int
+)
+
+@Serializable
+data class AddNewDeck(
+    val newDeckId: Int
+)
 
 @Serializable
 object CardQuiz
