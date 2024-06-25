@@ -110,7 +110,7 @@ private fun GenerateCard(
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "${ if (numOfCards == 0) "" else numOfCards }",
+                text = if (numOfCards == 0 || numOfCards == 1) "$numOfCards card" else "$numOfCards cards",
                 style = MaterialTheme1.typography.bodyMedium
             )
         }
