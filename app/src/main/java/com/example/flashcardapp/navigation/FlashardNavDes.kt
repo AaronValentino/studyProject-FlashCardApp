@@ -19,6 +19,12 @@ data class AddNewDeck(
 )
 
 @Serializable
+data class AddNewCard(
+    val deckId: Int,
+    val deckName: String
+)
+
+@Serializable
 object CardQuiz
 
 @Serializable

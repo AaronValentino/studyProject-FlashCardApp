@@ -32,6 +32,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.flashcardapp.R
+import com.example.flashcardapp.card.AddNewCardScreen
 import com.example.flashcardapp.deck.AddNewDeckScreen
 import com.example.flashcardapp.deck.DeckListScreen
 import com.example.flashcardapp.deck.SelectedDeckPageScreen
@@ -103,9 +104,21 @@ fun FlashardNavHost(
             SelectedDeckPageScreen(
                 onClickedBack = { navController.navigateUp() },
                 onClickedEditDeck = {},
+                onClickedAddNewCard = { deckId, deckName -> navController.navigate(AddNewCard(deckId, deckName)) },
                 onClickedAllCards = {},
                 onClickedLesson = {},
                 backgroundBrush = backgroundBrush
+            )
+        }
+        composable<AddNewCard> {
+            val addNewCard: AddNewCard = it.toRoute()
+            AddNewCardScreen(
+                topBar = {
+                    TopAppBarNoIcon(titleText = addNewCard.deckName)
+                },
+                backgroundBrush = backgroundBrush,
+                deckId = addNewCard.deckId,
+                cancelCreateClicked = { navController.navigateUp() }
             )
         }
         composable<CardList> {
