@@ -175,7 +175,9 @@ fun SelectedDeckPageScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
-                        text = "${uiState.value.deckCards.size} Card(s)",
+                        text = uiState.value.deckCards.size.let{
+                            if (it <= 1) "$it card" else "$it cards"
+                        },
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 2,
                         textAlign = TextAlign.Center,
