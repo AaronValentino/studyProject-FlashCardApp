@@ -5,6 +5,7 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.flashcardapp.card.AddNewCardViewModel
 import com.example.flashcardapp.deck.AddNewDeckViewModel
 import com.example.flashcardapp.deck.DeckListViewModel
 import com.example.flashcardapp.deck.SelectedDeckAndCardsDetailsViewModel
@@ -24,6 +25,13 @@ object AppViewModelProvider {
 
         initializer {
             AddNewDeckViewModel(
+                flashardApplication().container.deckNCardRepository
+            )
+        }
+
+        initializer {
+            AddNewCardViewModel(
+                this.createSavedStateHandle(),
                 flashardApplication().container.deckNCardRepository
             )
         }
