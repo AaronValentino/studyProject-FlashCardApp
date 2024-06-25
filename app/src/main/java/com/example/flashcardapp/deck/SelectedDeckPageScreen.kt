@@ -297,8 +297,13 @@ fun GenerateLazyRowForCards(
             }
         }
         items(uiState.value.deckCards) {
+            val questionAnswer: Map<QuestionAnswer, String> = mapOf(
+                QuestionAnswer.QUESTION to it.question,
+                QuestionAnswer.ANSWER to it.answer
+            )
+
             var contentDisplay by rememberSaveable {
-                mutableStateOf(it.question)
+                mutableStateOf(QuestionAnswer.QUESTION)
             }
             Box(
                 modifier = Modifier
@@ -317,28 +322,28 @@ fun GenerateLazyRowForCards(
                             scaleIn(initialScale = 0.5f, animationSpec = tween(500))
                         )
                         .togetherWith(
-                            slideOutVertically { it }
+                            slideOutVertically { x -> x }
                             +
                             fadeOut(animationSpec = tween(500))
                             +
                             scaleOut(targetScale = 0.5f, animationSpec = tween(500))
                         )
                     },
-                ) { string ->
+                ) { questionOrAnswer ->
                     Card(
                         modifier = Modifier
                             .clickable {
-                                contentDisplay = if (contentDisplay == it.question) {
-                                    it.answer
+                                contentDisplay = if (contentDisplay == QuestionAnswer.QUESTION) {
+                                    QuestionAnswer.ANSWER
                                 } else {
-                                    it.question
+                                    QuestionAnswer.QUESTION
                                 }
                             }
                             .fillMaxSize(0.8f)
                             .aspectRatio(0.85f)
                             .padding(horizontal = 20.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = if (contentDisplay == it.question) {
+                            containerColor = if (contentDisplay == QuestionAnswer.QUESTION) {
                                 MaterialTheme.colorScheme.secondaryContainer
                             } else {
                                 MaterialTheme.colorScheme.primary
@@ -351,7 +356,7 @@ fun GenerateLazyRowForCards(
                             verticalArrangement = Arrangement.Center
                         ) {
                             Text(
-                                text = string,
+                                text = "${questionAnswer[questionOrAnswer]}",
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 textAlign = TextAlign.Center
@@ -375,4 +380,8 @@ fun GenerateLazyRowForCards(
             }
         }
     }
+}
+
+enum class QuestionAnswer {
+    QUESTION, ANSWER
 }
