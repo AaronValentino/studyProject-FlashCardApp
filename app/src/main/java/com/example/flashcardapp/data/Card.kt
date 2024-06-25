@@ -23,3 +23,8 @@ data class Card(
     val numOfTimePracticed: Int,
     val lastAnsweredCorrect: Boolean
 )
+
+object CardConstant {
+    const val CARDQUESTIONLENGTH = 40
+    const val CARDANSWERLENGTH = 40
+}

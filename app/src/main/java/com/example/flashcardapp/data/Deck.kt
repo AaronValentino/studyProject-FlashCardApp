@@ -11,22 +11,7 @@ data class Deck(
     val numOfCards: Int
 )
 
-//private var deckCount = 0
-//object Deck1 {
-//    val deck: Deck = createDeck()
-//}
-//
-//object Deck2 {
-//    val deck: Deck = createDeck()
-//}
-//
-//object Deck3 {
-//    val deck: Deck = createDeck()
-//}
-//
-//fun createDeck(): Deck {
-//    deckCount++
-//    val deckID = deckCount
-//
-//    return Deck(deckID, "Deck $deckID", createCardsData(30))
-//}
+object DeckConstant {
+    const val DECKNAMELENGTH = 25
+    const val DECKDESCRIPTIONLENGTH = 100
+}
