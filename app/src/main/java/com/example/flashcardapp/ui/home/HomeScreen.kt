@@ -98,7 +98,7 @@ fun HomeScreen(
                         text = motivationPhraseUiState.value,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary,
-                        lineHeight = 40.sp,
+                        lineHeight = 32.sp,
                         letterSpacing = 2.sp,
                         modifier = Modifier
                             .fillMaxWidth()
