@@ -1,5 +1,7 @@
 package com.example.flashcardapp.user
 
+import android.content.Context
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,10 +16,17 @@ import kotlinx.coroutines.launch
 class UserProfileViewModel : ViewModel() {
     private val _motivationPhraseUiState = MutableStateFlow("")
     val motivationPhraseUiState: StateFlow<String> = _motivationPhraseUiState.asStateFlow()
+    private val _motivationAuthorUiState = MutableStateFlow("")
+    val motivationAuthorUiState: StateFlow<String> = _motivationAuthorUiState.asStateFlow()
 
-    fun setMotivationPhrase(phrase: String) {
+    fun setMotivationPhrase(context: Context) {
+        Log.d("setMotivationPhrase", "ran")
+        val motivationCard = randomMotivation((1..20).random())
+        _motivationAuthorUiState.value = context.getString(motivationCard.author)
+        val motivationPhrase = context.getString(motivationCard.phrase)
+
         viewModelScope.launch {
-            for (x in phrase) {
+            for (x in motivationPhrase) {
                 _motivationPhraseUiState.update {
                     it.plus(x)
                 }

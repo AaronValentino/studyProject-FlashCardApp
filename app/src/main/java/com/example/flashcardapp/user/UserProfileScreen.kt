@@ -1,5 +1,6 @@
 package com.example.flashcardapp.user
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -50,11 +51,13 @@ fun UserProfileScreen(
     backgroundBrush: Brush,
     viewModel: UserProfileViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val motivationCard = randomMotivation((1..20).random())
-    viewModel.setMotivationPhrase(stringResource(motivationCard.phrase))
-    val motivationPhraseUiState = viewModel.motivationPhraseUiState.collectAsState()
-    
     val context = LocalContext.current
+    Log.d("HomeScreen", "run motivation card")
+
+    viewModel.setMotivationPhrase(context)
+    val motivationPhraseUiState = viewModel.motivationPhraseUiState.collectAsState()
+    val motivationAuthorUiState = viewModel.motivationAuthorUiState.collectAsState()
+
     var nameInEditMode by rememberSaveable {
         mutableStateOf(false)
     }
@@ -225,7 +228,7 @@ fun UserProfileScreen(
                         Text(
                             text = stringResource(
                                 id = R.string.motivation_author_format,
-                                stringResource(id = motivationCard.author)
+                                motivationAuthorUiState.value
                             ),
                             modifier = Modifier
                                 .fillMaxWidth(),
