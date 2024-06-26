@@ -29,9 +29,9 @@
     <!-- User Profile Screen -->
     <string name="nav_user_profile_title">Profile</string>
     <string name="user_profile_picture">User Profile Picture</string>
-    <string name="user_name">Yakashi Valeroni</string>
+    <string name="user_name">Yakashi Valeron</string>
     <string name="warning_username_too_long">Username too long!</string>
-    <string name="text_field_label">%s, New username length %s 25 letters</string>
+    <string name="text_field_label">New username length %s 25 letters</string>
     <string name="warning_invalid_username">Invalid Username</string>
     <string name="success_username_changed">Username changed successfully</string>
 

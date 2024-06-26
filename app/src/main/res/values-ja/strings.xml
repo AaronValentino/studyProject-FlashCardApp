@@ -31,7 +31,7 @@
     <string name="user_profile_picture">ユーザープロフィール写真</string>
     <string name="user_name">ヤカシ ヴァレロニ</string>
     <string name="warning_username_too_long">ユーザー名が長すぎます！</string>
-    <string name="text_field_label">%s, 新しい名前の長さ %s 25文字</string>
+    <string name="text_field_label">新しい名前の長さ %s 25文字</string>
     <string name="warning_invalid_username">無効なユーザー名</string>
     <string name="success_username_changed">ユーザー名が正常に変更されました</string>
 
@@ -94,7 +94,7 @@
     <string name="motivation_19_phrase">「あなたの努力はすぐには報われないかもしれないが、いずれ報われるだろう。」</string>
     <string name="motivation_19_author">匿名</string>
 
-    <string name="motivation_20_phrase">明日の実現の唯一の限界は、今日の疑念です。</string>
+    <string name="motivation_20_phrase">「明日の実現の唯一の限界は、今日の疑念です。」</string>
     <string name="motivation_20_author">フランクリン・D・ルーズベルト</string>
 
     <!-- Welcome Screen multilingual phrases -->
