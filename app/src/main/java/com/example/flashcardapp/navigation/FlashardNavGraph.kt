@@ -177,7 +177,9 @@ fun TopAppBarWithIcon(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            vertical = 8.dp
+                            top = 10.dp,
+                            end = 40.dp,
+                            start = 40.dp
                         ),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -224,7 +226,9 @@ fun TopAppBarNoIcon(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            vertical = 8.dp
+                            top = 10.dp,
+                            end = 12.dp,
+                            start = if (titleText.length > 9) 60.dp else 12.dp
                         ),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onPrimary,
