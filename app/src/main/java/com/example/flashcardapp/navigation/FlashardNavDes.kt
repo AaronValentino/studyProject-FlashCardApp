@@ -28,7 +28,7 @@ data class AddNewCard(
 object CardQuiz
 
 @Serializable
-object CardList
+object AllCards
 
 @Serializable
 object UserProfile

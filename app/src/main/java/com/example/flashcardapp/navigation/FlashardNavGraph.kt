@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -58,17 +59,13 @@ fun FlashardNavHost(
     ) {
         composable<Home> {
             HomeScreen(
-                onButtonClicked = {
-                    navController.navigate(DeckList)
-                },
+                onButtonClicked = { navController.navigate(DeckList) },
                 topBar = {
                     TopAppBarWithIcon(
                         titleText = stringResource(id = R.string.app_name),
                         iconImageVector = Icons.Filled.Person,
                         iconContentDescription = stringResource(id = R.string.top_app_bar_user_profile_button),
-                        onButtonClicked = {
-                            navController.navigate(UserProfile)
-                        }
+                        onIconButtonClicked = { navController.navigate(UserProfile) }
                     )
                 },
                 backgroundBrush = backgroundBrush
@@ -77,7 +74,11 @@ fun FlashardNavHost(
         composable<DeckList> {
             DeckListScreen(
                 topBar = {
-                    TopAppBarNoIcon(titleText = "Deck List")
+                    TopAppBarNoIcon(
+                        titleText = "Deck List",
+                        showBackButton = true,
+                        onBackButtonClicked = { navController.navigateUp() }
+                    )
                 },
                 backgroundBrush = backgroundBrush,
                 cardClicked = { deckId -> navController.navigate(SelectedDeckPage(deckId)) },
@@ -87,9 +88,7 @@ fun FlashardNavHost(
         composable<AddNewDeck> {
             val addNewDeck: AddNewDeck = it.toRoute()
             AddNewDeckScreen(
-                topBar = {
-                    TopAppBarNoIcon(titleText = "New Deck")
-                },
+                topBar = { TopAppBarNoIcon(titleText = "New Deck") },
                 backgroundBrush = backgroundBrush,
                 newDeckCreateClicked = { deckId ->
                     navController.popBackStack()
@@ -116,9 +115,7 @@ fun FlashardNavHost(
                 navController.navigate(SelectedDeckPage(addNewCard.deckId))
             }
             AddNewCardScreen(
-                topBar = {
-                    TopAppBarNoIcon(titleText = addNewCard.deckName)
-                },
+                topBar = { TopAppBarNoIcon(titleText = addNewCard.deckName) },
                 backgroundBrush = backgroundBrush,
                 deckId = addNewCard.deckId,
                 cancelCreateClicked = {
@@ -128,7 +125,10 @@ fun FlashardNavHost(
                 }
             )
         }
-        composable<CardList> {
+        composable<AllCards> {
+//            AllCardsScreen(
+//
+//            )
         }
         composable<CardQuiz> {
         }
@@ -140,9 +140,7 @@ fun FlashardNavHost(
                         iconImageVector = Icons.Filled.Home,
                         iconContentDescription = stringResource(id = R.string.top_app_bar_home_button),
                         iconPadding = 2,
-                        onButtonClicked = {
-                            navController.navigate(Home)
-                        }
+                        onIconButtonClicked = { navController.navigate(Home) }
                     )
                 },
                 backgroundBrush = backgroundBrush
@@ -153,19 +151,17 @@ fun FlashardNavHost(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+// For navigating between Home and User Profile
 fun TopAppBarWithIcon(
     titleText: String,
     iconImageVector: ImageVector,
     iconContentDescription: String,
     iconPadding: Int = 0,
-    onButtonClicked: () -> Unit
+    onIconButtonClicked: () -> Unit
 ) {
     CenterAlignedTopAppBar(
         title = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
+            Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = titleText,
                     modifier = Modifier
@@ -189,8 +185,8 @@ fun TopAppBarWithIcon(
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                             .padding(top = (4 + iconPadding).dp)
-                            .clickable { onButtonClicked() }
-                            .sizeIn(minWidth = 50.dp, minHeight = 55.dp),
+                            .clickable { onIconButtonClicked() }
+                            .sizeIn(minWidth = 50.dp, minHeight = 55.dp)
                     )
                 }
             }
@@ -204,15 +200,15 @@ fun TopAppBarWithIcon(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+// No Icon but with back button
 fun TopAppBarNoIcon(
-    titleText: String
+    titleText: String,
+    showBackButton: Boolean = false,
+    onBackButtonClicked: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         title = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
+            Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = titleText,
                     modifier = Modifier
@@ -226,6 +222,17 @@ fun TopAppBarNoIcon(
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
+                if (showBackButton) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "back button",
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .clickable { onBackButtonClicked() }
+                            .sizeIn(minWidth = 50.dp, minHeight = 55.dp)
+                    )
+                }
             }
         },
         windowInsets = WindowInsets(top = 40.dp),

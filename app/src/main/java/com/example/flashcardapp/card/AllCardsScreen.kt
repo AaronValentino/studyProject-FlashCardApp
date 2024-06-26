@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.example.flashcardapp.data.Card
 
 @Composable
-fun CardListScreen(
+fun AllCardsScreen(
     deckName: String,
     deckCards: List<Card>,
     topAppBarIcon: (String) -> Unit
