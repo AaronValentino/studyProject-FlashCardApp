@@ -73,6 +73,7 @@ class SelectedDeckAndCardsDetailsViewModel(
         )
     }
 
+    // Set up for card selected to be edited
     private val _selectedCardDetailsUiState = MutableStateFlow(
         Card(
             cardId = 0,
@@ -85,7 +86,8 @@ class SelectedDeckAndCardsDetailsViewModel(
     )
     val selectedCardDetailsUiState: StateFlow<Card> = _selectedCardDetailsUiState.asStateFlow()
 
-    fun updateCardToBeEditedFullDetails(currentCard: Card) {
+    // For the dialog to get the card's details before editing
+    fun inputCardToBeEditedFullDetails(currentCard: Card) {
         _selectedCardDetailsUiState.update { currentState ->
             currentState.copy(
                 deckId = currentCard.deckId,
@@ -98,6 +100,7 @@ class SelectedDeckAndCardsDetailsViewModel(
         }
     }
 
+    // Input the new question and answer into the state for updating
     fun updateCardToBeEditedDetails(question: String, answer: String) {
         Log.d("CheckUpdateCard", "updateCardToBeEditedDetails")
         _selectedCardDetailsUiState.update { currentState ->

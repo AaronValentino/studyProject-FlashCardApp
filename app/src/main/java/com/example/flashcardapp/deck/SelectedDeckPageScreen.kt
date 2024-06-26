@@ -1,6 +1,5 @@
 package com.example.flashcardapp.deck
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.InfiniteRepeatableSpec
@@ -67,9 +66,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.card.EditCardDialog
 import com.example.flashcardapp.data.Card
-import com.example.flashcardapp.data.CardConstant.CARDANSWERLENGTH
-import com.example.flashcardapp.data.CardConstant.CARDQUESTIONLENGTH
 import com.example.flashcardapp.data.DeckConstant.DECKDESCRIPTIONLENGTH
 import com.example.flashcardapp.data.DeckConstant.DECKNAMELENGTH
 import com.example.flashcardapp.ui.theme.Shape
@@ -81,7 +79,7 @@ fun SelectedDeckPageScreen(
     backgroundBrush: Brush,
     onClickedBack: () -> Unit,
     onClickedAddNewCard: (Int, String) -> Unit,
-    onClickedAllCards: () -> Unit,
+    onClickedAllCards: (Int, String) -> Unit,
     onClickedLesson: () -> Unit,
     viewModel: SelectedDeckAndCardsDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -129,7 +127,7 @@ fun SelectedDeckPageScreen(
     }
 
     if (editCardDetails) {
-        EditCardDetails(
+        EditCardDialog(
             confirmEditCardDetailsClicked = {
                 coroutineScope.launch {
                     viewModel.updateCardDetails()
@@ -245,7 +243,7 @@ fun SelectedDeckPageScreen(
                                     )
                                 },
                                 onClickedEditCardDetails = {
-                                    viewModel.updateCardToBeEditedFullDetails(it)
+                                    viewModel.inputCardToBeEditedFullDetails(it)
                                     editCardDetails = true
                                 }
                             )
@@ -257,7 +255,12 @@ fun SelectedDeckPageScreen(
                     ) {
                         ElevatedButton(
                             modifier = Modifier.sizeIn(minHeight = 200.dp),
-                            onClick = onClickedAllCards,
+                            onClick = {
+                                onClickedAllCards(
+                                    uiState.value.selectedDeck.deckId,
+                                    uiState.value.selectedDeck.name
+                                )
+                            },
                             border = BorderStroke(
                                 width = 4.dp,
                                 color = MaterialTheme.colorScheme.primary
@@ -350,12 +353,12 @@ fun EditDeckDetails(
                         label = {
                             if (editDeckName.length > DECKNAMELENGTH) {
                                 Text(
-                                    text = "New deck's name is too long!",
+                                    text = "Deck's new name is too long!",
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             } else {
                                 Text(
-                                    text = "New deck's name",
+                                    text = "Deck's new name",
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -379,12 +382,12 @@ fun EditDeckDetails(
                         label = {
                             if (editDeckDescription.length > DECKDESCRIPTIONLENGTH) {
                                 Text(
-                                    text= "New deck's description is too long!",
+                                    text= "Deck's new description is too long!",
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             } else {
                                 Text(
-                                    text= "New deck's description (Optional)",
+                                    text= "Deck's new description (Optional)",
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -572,124 +575,6 @@ fun GenerateLazyRowForCards(
                         contentDescription = "Close Button",
                         tint = MaterialTheme.colorScheme.primary
                     )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun EditCardDetails(
-    confirmEditCardDetailsClicked: () -> Unit,
-    dismissEditCardDetailsClicked: () -> Unit,
-    viewModel: SelectedDeckAndCardsDetailsViewModel
-) {
-    val currentCardState = viewModel.selectedCardDetailsUiState.collectAsState()
-
-    Log.d("CheckCard", "$currentCardState")
-
-    var editCardQuestion by rememberSaveable {
-        mutableStateOf(currentCardState.value.question)
-    }
-    var editCardAnswer by rememberSaveable {
-        mutableStateOf(currentCardState.value.answer)
-    }
-
-    Dialog(onDismissRequest = dismissEditCardDetailsClicked) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .aspectRatio(0.7f)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1.5f)
-                ) {
-                    OutlinedTextField(
-                        value = editCardQuestion,
-                        onValueChange = { editCardQuestion = it },
-                        label = {
-                            if (editCardQuestion.length > CARDQUESTIONLENGTH) {
-                                Text(
-                                    text = "The card's new question is too long!",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            } else {
-                                Text(
-                                    text = "Card's new question",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize(),
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                        isError = editCardQuestion.length > CARDQUESTIONLENGTH
-                    )
-                }
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(2f)
-                ) {
-                    OutlinedTextField(
-                        value = editCardAnswer,
-                        onValueChange = { editCardAnswer = it },
-                        keyboardActions = KeyboardActions(),
-                        label = {
-                            if (editCardAnswer.length > CARDANSWERLENGTH) {
-                                Text(
-                                    text= "Card's new answer is too long!",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            } else {
-                                Text(
-                                    text= "Card's new answer",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize(),
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        isError = editCardAnswer.length > CARDANSWERLENGTH
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.25f))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    ElevatedButton(onClick = dismissEditCardDetailsClicked) {
-                        Text("Cancel")
-                    }
-                    ElevatedButton(
-                        onClick = {
-                            viewModel.updateCardToBeEditedDetails(editCardQuestion, editCardAnswer)
-                            confirmEditCardDetailsClicked()
-                        },
-                        enabled = (
-                                editCardQuestion.length <= CARDQUESTIONLENGTH &&
-                                editCardQuestion.isNotEmpty() &&
-                                editCardAnswer.length <= CARDANSWERLENGTH &&
-                                editCardAnswer.isNotEmpty() &&
-                                ((editCardQuestion != currentCardState.value.question) || (editCardAnswer != currentCardState.value.answer))
-                        )
-                    ) {
-                        Text("Done")
-                    }
                 }
             }
         }
