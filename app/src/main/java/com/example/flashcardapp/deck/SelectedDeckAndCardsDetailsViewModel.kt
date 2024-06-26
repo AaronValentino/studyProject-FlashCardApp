@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.flashcardapp.data.Card
 import com.example.flashcardapp.data.Deck
 import com.example.flashcardapp.data.DeckNCardRepository
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,32 +27,21 @@ class SelectedDeckAndCardsDetailsViewModel(
     val deckId: Int = checkNotNull(savedStateHandle["deckId"])
 
     val selectedDeckCardsUiState: StateFlow<SelectedDeckUiState> =
-        if (deckStatus) {
-            deckNCardRepository.getCombinedDeckCardsStream(deckId).filterNotNull().map {
-                SelectedDeckUiState(it.deck, it.cards)
-            }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = SelectedDeckUiState(
-                    Deck(
-                        deckId = 0,
-                        name = "Loading",
-                        description = "Loading",
-                        numOfCards = 0
-                    )
-                )
-            )
-        } else {
-            MutableStateFlow(SelectedDeckUiState(
+        deckNCardRepository.getCombinedDeckCardsStream(deckId).filterNotNull().map {
+            SelectedDeckUiState(it.deck, it.cards)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+            initialValue = SelectedDeckUiState(
                 Deck(
                     deckId = 0,
                     name = "Loading",
                     description = "Loading",
                     numOfCards = 0
                 )
-            ))
-        }
+            )
+        )
 
     init {
         deckStatus = true
@@ -87,7 +77,8 @@ class SelectedDeckAndCardsDetailsViewModel(
         )
     }
 
-    fun confirmDeleteDeck() {
+    suspend fun confirmDeleteDeck() {
+        viewModelScope.cancel()
         val deckToBeDeleted: Deck = selectedDeckCardsUiState.value.selectedDeck.let{
             Deck(
                 deckId = it.deckId,
@@ -96,11 +87,7 @@ class SelectedDeckAndCardsDetailsViewModel(
                 numOfCards = it.numOfCards
             )
         }
-        deckStatus = false
-        viewModelScope.launch {
-            delay(1000L)
-            deckNCardRepository.deleteDeck(deckToBeDeleted)
-        }
+        deckNCardRepository.deleteDeck(deckToBeDeleted)
     }
 
     // Set up for card selected to be edited

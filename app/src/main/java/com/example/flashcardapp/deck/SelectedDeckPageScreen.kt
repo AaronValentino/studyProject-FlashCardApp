@@ -111,8 +111,10 @@ fun SelectedDeckPageScreen(
                 editDeckDetails = false
             },
             confirmDeleteDeckClicked = {
-                viewModel.confirmDeleteDeck()
-                onClickedConfirmDeleteDeck()
+                coroutineScope.launch {
+                    viewModel.confirmDeleteDeck()
+                    onClickedConfirmDeleteDeck()
+                }
             },
             currentDeck = uiState.value.selectedDeck
         )
