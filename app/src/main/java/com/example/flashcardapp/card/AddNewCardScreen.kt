@@ -23,7 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,12 +48,8 @@ fun AddNewCardScreen(
     backgroundBrush: Brush,
     viewModel: AddNewCardViewModel = viewModel(factory = AppViewModelProvider.Factory),
     deckId: Int,
-    cancelCreateClicked: (Int) -> Unit
+    cancelCreateClicked: () -> Unit
 ) {
-    var cardsAdded by rememberSaveable {
-        mutableIntStateOf(0)
-    }
-
     Log.d("Check Passed in deckId", deckId.toString())
     val context = LocalContext.current
 
@@ -211,7 +206,7 @@ fun AddNewCardScreen(
             }
             if (cancelCreateNewCard) {
                 CancelCreateNewDeckDialog(
-                    confirmCancelCreateNewDeckClicked = { cancelCreateClicked(cardsAdded) },
+                    confirmCancelCreateNewDeckClicked = cancelCreateClicked,
                     dismissCancelCreateNewDeckClicked = { cancelCreateNewCard = false }
                 )
             }

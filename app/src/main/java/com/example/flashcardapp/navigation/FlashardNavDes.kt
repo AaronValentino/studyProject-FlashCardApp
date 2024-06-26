@@ -10,8 +10,7 @@ object DeckList
 
 @Serializable
 data class SelectedDeckPage(
-    val deckId: Int,
-    val cardsAdded: Int = 0
+    val deckId: Int
 )
 
 @Serializable

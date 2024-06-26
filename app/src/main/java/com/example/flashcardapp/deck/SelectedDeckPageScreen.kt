@@ -80,14 +80,9 @@ fun SelectedDeckPageScreen(
     onClickedAddNewCard: (Int, String) -> Unit,
     onClickedAllCards: () -> Unit,
     onClickedLesson: () -> Unit,
-    cardsAdded: Int,
     viewModel: SelectedDeckAndCardsDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState = viewModel.selectedDeckCardsUiState.collectAsState()
-
-    if (cardsAdded > 0) {
-        viewModel.autoUpdateDeckDetails()
-    }
 
     val infiniteTransition = rememberInfiniteTransition(label = "")
     val infiniteRotationColor = infiniteTransition.animateColor(

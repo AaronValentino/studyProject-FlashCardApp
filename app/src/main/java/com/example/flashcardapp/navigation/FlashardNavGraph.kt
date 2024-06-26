@@ -1,6 +1,6 @@
 package com.example.flashcardapp.navigation
 
-import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -100,31 +100,31 @@ fun FlashardNavHost(
             )
         }
         composable<SelectedDeckPage> {
-            val selectedDeckPage: SelectedDeckPage = it.toRoute()
-            Log.d("CheckSavedStateHandle", it.savedStateHandle.toString())
             SelectedDeckPageScreen(
+                backgroundBrush = backgroundBrush,
                 onClickedBack = { navController.navigateUp() },
                 onClickedAddNewCard = { deckId, deckName -> navController.navigate(AddNewCard(deckId, deckName)) },
                 onClickedAllCards = {},
-                onClickedLesson = {},
-                backgroundBrush = backgroundBrush,
-                cardsAdded = selectedDeckPage.cardsAdded
+                onClickedLesson = {}
             )
         }
         composable<AddNewCard> {
             val addNewCard: AddNewCard = it.toRoute()
+            BackHandler {
+                navController.navigateUp()
+                navController.navigateUp()
+                navController.navigate(SelectedDeckPage(addNewCard.deckId))
+            }
             AddNewCardScreen(
                 topBar = {
                     TopAppBarNoIcon(titleText = addNewCard.deckName)
                 },
                 backgroundBrush = backgroundBrush,
                 deckId = addNewCard.deckId,
-                cancelCreateClicked = { cardsAdded ->
+                cancelCreateClicked = {
                     navController.navigateUp()
                     navController.navigateUp()
-                    navController.navigate(
-                        SelectedDeckPage(addNewCard.deckId, cardsAdded)
-                    )
+                    navController.navigate(SelectedDeckPage(addNewCard.deckId))
                 }
             )
         }
