@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
@@ -60,7 +61,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
@@ -158,30 +161,38 @@ fun SelectedDeckPageScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp),
+                        .padding(
+                            vertical = 20.dp,
+                            horizontal = 16.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = uiState.value.selectedDeck.name,
                         style = MaterialTheme.typography.titleLarge,
+                        lineHeight = 40.sp,
                         maxLines = 2,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f)
+                            .aspectRatio(3.5f),
+                        overflow = TextOverflow.Ellipsis
                     )
                     Text(
                         text = uiState.value.deckCards.size.let{
                             if (it <= 1) "$it card" else "$it cards"
                         },
                         style = MaterialTheme.typography.bodyLarge,
-                        maxLines = 2,
+                        maxLines = 1,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .aspectRatio(1.5f),
+                            .aspectRatio(1.75f),
                         border = BorderStroke(
                             width = 4.dp,
                             color = MaterialTheme.colorScheme.primary
@@ -190,7 +201,6 @@ fun SelectedDeckPageScreen(
                         Text(
                             text = "Deck's descriptions: ",
                             style = MaterialTheme.typography.bodyMedium,
-                            maxLines = 2,
                             textAlign = TextAlign.Start,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -203,47 +213,50 @@ fun SelectedDeckPageScreen(
                         Text(
                             text = uiState.value.selectedDeck.description,
                             style = MaterialTheme.typography.bodyLarge,
-                            maxLines = 2,
                             textAlign = TextAlign.Start,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(16.dp)
+                                .padding(16.dp),
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
-                    Spacer(modifier = Modifier.weight(1f))
-                    if (uiState.value.deckCards.isEmpty()) {
-                        NoCardsAddNewCard(
-                            infiniteRotationColor = infiniteRotationColor,
-                            onClickedAddNewCard = {
-                                onClickedAddNewCard(
-                                    uiState.value.selectedDeck.deckId,
-                                    uiState.value.selectedDeck.name
-                                )
-                            }
-                        )
-                    } else {
-                        GenerateLazyRowForCards(
-                            infiniteRotationColor = infiniteRotationColor,
-                            uiState = uiState,
-                            onClickedAddNewCard = {
-                                onClickedAddNewCard(
-                                    uiState.value.selectedDeck.deckId,
-                                    uiState.value.selectedDeck.name
-                                )
-                            },
-                            onClickedEditCardDetails = {
-                                viewModel.updateCardToBeEditedFullDetails(it)
-                                editCardDetails = true
-                            }
-                        )
+                    Box(
+                        modifier = Modifier.fillMaxSize(0.9f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (uiState.value.deckCards.isEmpty()) {
+                            NoCardsAddNewCard(
+                                infiniteRotationColor = infiniteRotationColor,
+                                onClickedAddNewCard = {
+                                    onClickedAddNewCard(
+                                        uiState.value.selectedDeck.deckId,
+                                        uiState.value.selectedDeck.name
+                                    )
+                                }
+                            )
+                        } else {
+                            GenerateLazyRowForCards(
+                                infiniteRotationColor = infiniteRotationColor,
+                                uiState = uiState,
+                                onClickedAddNewCard = {
+                                    onClickedAddNewCard(
+                                        uiState.value.selectedDeck.deckId,
+                                        uiState.value.selectedDeck.name
+                                    )
+                                },
+                                onClickedEditCardDetails = {
+                                    viewModel.updateCardToBeEditedFullDetails(it)
+                                    editCardDetails = true
+                                }
+                            )
+                        }
                     }
-
-                    Spacer(modifier = Modifier.weight(1f))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         ElevatedButton(
+                            modifier = Modifier.sizeIn(minHeight = 200.dp),
                             onClick = onClickedAllCards,
                             border = BorderStroke(
                                 width = 4.dp,
@@ -256,6 +269,7 @@ fun SelectedDeckPageScreen(
                             )
                         }
                         ElevatedButton(
+                            modifier = Modifier.sizeIn(minHeight = 200.dp),
                             onClick = onClickedLesson,
                             border = BorderStroke(
                                 width = 4.dp,
@@ -449,7 +463,7 @@ fun GenerateLazyRowForCards(
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(0.85f),
+            .aspectRatio(0.8f),
         contentPadding = PaddingValues(
             vertical = 16.dp),
         horizontalArrangement = Arrangement.Start,
@@ -521,8 +535,8 @@ fun GenerateLazyRowForCards(
                                 }
                             }
                             .fillMaxSize(0.8f)
-                            .aspectRatio(0.85f)
-                            .padding(horizontal = 20.dp),
+                            .aspectRatio(0.80f)
+                            .padding(horizontal = 8.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = if (contentDisplay == QuestionAnswer.QUESTION) {
                                 MaterialTheme.colorScheme.secondaryContainer
@@ -539,7 +553,8 @@ fun GenerateLazyRowForCards(
                             Text(
                                 text = "${questionAnswer[questionOrAnswer]}",
                                 modifier = Modifier
-                                    .fillMaxWidth(),
+                                    .fillMaxWidth()
+                                    .padding(20.dp),
                                 textAlign = TextAlign.Center
                             )
                         }
