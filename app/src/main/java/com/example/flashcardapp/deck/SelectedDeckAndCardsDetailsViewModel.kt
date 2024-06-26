@@ -44,9 +44,9 @@ class SelectedDeckAndCardsDetailsViewModel(
         autoUpdateDeckDetails()
     }
 
-    fun autoUpdateDeckDetails() {
+    private fun autoUpdateDeckDetails() {
         viewModelScope.launch{
-            delay(2000L)
+            delay(1000L)
             selectedDeckCardsUiState.value.let {
                 Log.d("viewModelScopeToUpdateDeck", "Launched")
                 updateDeckDetails(
