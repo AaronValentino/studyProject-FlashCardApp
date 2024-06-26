@@ -1,6 +1,7 @@
 package com.example.flashcardapp.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -47,11 +48,12 @@ fun HomeScreen(
         mutableStateOf(false)
     }
     if (!ran) {
-        viewModel.setMotivationPhrase(context)
+        viewModel.runMotivationSpeech(context)
         ran = true
     }
     val motivationPhraseUiState = viewModel.motivationPhraseUiState.collectAsState()
     val motivationAuthorUiState = viewModel.motivationAuthorUiState.collectAsState()
+    val motivationDoneUiState = viewModel.motivationDoneUiState.collectAsState()
 
     Scaffold(
         topBar = topBar
@@ -66,6 +68,11 @@ fun HomeScreen(
         ) {
             ElevatedCard(
                 modifier = Modifier
+                    .clickable {
+                        if (motivationDoneUiState.value) {
+                            viewModel.runMotivationSpeech(context)
+                        }
+                    }
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
                     .aspectRatio(0.75f),
@@ -80,7 +87,10 @@ fun HomeScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp),
+                        .padding(
+                            vertical = 20.dp,
+                            horizontal = 24.dp
+                        ),
                     verticalArrangement = Arrangement.Center
                 ) {
                     Spacer(modifier = Modifier.weight(1f))

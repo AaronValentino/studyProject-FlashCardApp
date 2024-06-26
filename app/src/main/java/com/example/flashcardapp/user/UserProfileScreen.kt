@@ -54,9 +54,10 @@ fun UserProfileScreen(
     val context = LocalContext.current
     Log.d("HomeScreen", "run motivation card")
 
-    viewModel.setMotivationPhrase(context)
+    viewModel.runMotivationSpeech(context)
     val motivationPhraseUiState = viewModel.motivationPhraseUiState.collectAsState()
     val motivationAuthorUiState = viewModel.motivationAuthorUiState.collectAsState()
+    val motivationDoneUiState = viewModel.motivationDoneUiState.collectAsState()
 
     var nameInEditMode by rememberSaveable {
         mutableStateOf(false)
@@ -202,6 +203,11 @@ fun UserProfileScreen(
                 }
                 ElevatedCard(
                     modifier = Modifier
+                        .clickable {
+                            if (motivationDoneUiState.value) {
+                                viewModel.runMotivationSpeech(context)
+                            }
+                        }
                         .sizeIn(minHeight = 48.dp)
                         .aspectRatio(1.5f),
                     shape = MaterialTheme.shapes.large,

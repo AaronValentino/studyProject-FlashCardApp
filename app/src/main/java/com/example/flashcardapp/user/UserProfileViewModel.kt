@@ -19,19 +19,33 @@ class UserProfileViewModel : ViewModel() {
     private val _motivationAuthorUiState = MutableStateFlow("")
     val motivationAuthorUiState: StateFlow<String> = _motivationAuthorUiState.asStateFlow()
 
-    fun setMotivationPhrase(context: Context) {
-        Log.d("setMotivationPhrase", "ran")
+    private val _motivationDoneUiState = MutableStateFlow(false)
+    val motivationDoneUiState: StateFlow<Boolean> = _motivationDoneUiState.asStateFlow()
+
+    fun runMotivationSpeech(context: Context) {
+        Log.d("_motivationDoneUiState", "Check before: ${motivationDoneUiState.value}")
         val motivationCard = randomMotivation((1..20).random())
-        _motivationAuthorUiState.value = context.getString(motivationCard.author)
+        _motivationAuthorUiState.update { context.getString(motivationCard.author) }
+        _motivationPhraseUiState.update { "" }
         val motivationPhrase = context.getString(motivationCard.phrase)
 
         viewModelScope.launch {
-            for (x in motivationPhrase) {
-                _motivationPhraseUiState.update {
-                    it.plus(x)
+            _motivationDoneUiState.update { false }
+            Log.d("_motivationDoneUiState", "${motivationDoneUiState.value}")
+            val job = viewModelScope.launch {
+                for (x in motivationPhrase) {
+                    _motivationPhraseUiState.update {
+                        it.plus(x)
+                    }
+                    delay(50L)
                 }
-                delay(50L)
             }
+            job.join()
+            delay(1000L)
+            _motivationDoneUiState.update {
+                job.isCompleted
+            }
+            Log.d("_motivationDoneUiState", "${motivationDoneUiState.value}")
         }
     }
 }
