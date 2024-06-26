@@ -103,6 +103,7 @@ fun FlashardNavHost(
             SelectedDeckPageScreen(
                 backgroundBrush = backgroundBrush,
                 onClickedBack = { navController.navigateUp() },
+                onClickedConfirmDeleteDeck = { navController.navigateUp() },
                 onClickedAddNewCard = { deckId, deckName -> navController.navigate(AddNewCard(deckId, deckName)) },
                 onClickedAllCards = { deckId, deckName -> navController.navigate(AllCards(deckId, deckName)) },
                 onClickedLesson = {}

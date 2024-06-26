@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -21,26 +22,39 @@ class SelectedDeckAndCardsDetailsViewModel(
     savedStateHandle: SavedStateHandle,
     private val deckNCardRepository: DeckNCardRepository
 ) : ViewModel() {
+    private var deckStatus = true
     val deckId: Int = checkNotNull(savedStateHandle["deckId"])
 
     val selectedDeckCardsUiState: StateFlow<SelectedDeckUiState> =
-        deckNCardRepository.getCombinedDeckCardsStream(deckId).map {
-            SelectedDeckUiState(it.deck, it.cards)
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-            initialValue = SelectedDeckUiState(
+        if (deckStatus) {
+            deckNCardRepository.getCombinedDeckCardsStream(deckId).filterNotNull().map {
+                SelectedDeckUiState(it.deck, it.cards)
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = SelectedDeckUiState(
+                    Deck(
+                        deckId = 0,
+                        name = "Loading",
+                        description = "Loading",
+                        numOfCards = 0
+                    )
+                )
+            )
+        } else {
+            MutableStateFlow(SelectedDeckUiState(
                 Deck(
                     deckId = 0,
                     name = "Loading",
                     description = "Loading",
                     numOfCards = 0
                 )
-            )
-        )
+            ))
+        }
 
     init {
+        deckStatus = true
         autoUpdateDeckDetails()
     }
 
@@ -71,6 +85,22 @@ class SelectedDeckAndCardsDetailsViewModel(
                 numOfCards = numOfCards
             )
         )
+    }
+
+    fun confirmDeleteDeck() {
+        val deckToBeDeleted: Deck = selectedDeckCardsUiState.value.selectedDeck.let{
+            Deck(
+                deckId = it.deckId,
+                name = it.name,
+                description = it.description,
+                numOfCards = it.numOfCards
+            )
+        }
+        deckStatus = false
+        viewModelScope.launch {
+            delay(1000L)
+            deckNCardRepository.deleteDeck(deckToBeDeleted)
+        }
     }
 
     // Set up for card selected to be edited

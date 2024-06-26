@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,8 +29,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -43,7 +40,6 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,18 +54,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.card.EditCardDialog
 import com.example.flashcardapp.data.Card
-import com.example.flashcardapp.data.DeckConstant.DECKDESCRIPTIONLENGTH
-import com.example.flashcardapp.data.DeckConstant.DECKNAMELENGTH
 import com.example.flashcardapp.ui.theme.Shape
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -78,6 +70,7 @@ import kotlinx.coroutines.launch
 fun SelectedDeckPageScreen(
     backgroundBrush: Brush,
     onClickedBack: () -> Unit,
+    onClickedConfirmDeleteDeck: () -> Unit,
     onClickedAddNewCard: (Int, String) -> Unit,
     onClickedAllCards: (Int, String) -> Unit,
     onClickedLesson: () -> Unit,
@@ -102,7 +95,7 @@ fun SelectedDeckPageScreen(
     val coroutineScope = rememberCoroutineScope()
 
     if (editDeckDetails) {
-        EditDeckDetails(
+        EditDeckDialog(
             confirmEditDeckDetailsClicked = { newTitle, newDescription ->
                 coroutineScope.launch {
                     viewModel.updateDeckDetails(
@@ -117,8 +110,11 @@ fun SelectedDeckPageScreen(
             dismissEditDeckDetailsClicked = {
                 editDeckDetails = false
             },
-            oldDeckName = uiState.value.selectedDeck.name,
-            oldDeckDescription = uiState.value.selectedDeck.description
+            confirmDeleteDeckClicked = {
+                viewModel.confirmDeleteDeck()
+                onClickedConfirmDeleteDeck()
+            },
+            currentDeck = uiState.value.selectedDeck
         )
     }
 
@@ -309,120 +305,6 @@ fun SelectedDeckPageScreen(
                     contentDescription = "Edit Deck Details Button",
                     tint = MaterialTheme.colorScheme.primary
                 )
-            }
-        }
-    }
-}
-
-@Composable
-fun EditDeckDetails(
-    confirmEditDeckDetailsClicked: (String, String) -> Unit,
-    dismissEditDeckDetailsClicked: () -> Unit,
-    oldDeckName: String,
-    oldDeckDescription: String
-) {
-    var editDeckName by rememberSaveable {
-        mutableStateOf(oldDeckName)
-    }
-    var editDeckDescription by rememberSaveable {
-        mutableStateOf(oldDeckDescription)
-    }
-
-    Dialog(onDismissRequest = dismissEditDeckDetailsClicked) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .aspectRatio(0.7f)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1.5f)
-                ) {
-                    OutlinedTextField(
-                        value = editDeckName,
-                        onValueChange = { editDeckName = it },
-                        label = {
-                            if (editDeckName.length > DECKNAMELENGTH) {
-                                Text(
-                                    text = "Deck's new name is too long!",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            } else {
-                                Text(
-                                    text = "Deck's new name",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize(),
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                        isError = editDeckName.length > DECKNAMELENGTH
-                    )
-                }
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(2f)
-                ) {
-                    OutlinedTextField(
-                        value = editDeckDescription,
-                        onValueChange = { editDeckDescription = it },
-                        keyboardActions = KeyboardActions(),
-                        label = {
-                            if (editDeckDescription.length > DECKDESCRIPTIONLENGTH) {
-                                Text(
-                                    text= "Deck's new description is too long!",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            } else {
-                                Text(
-                                    text= "Deck's new description (Optional)",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize(),
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        isError = editDeckDescription.length > DECKDESCRIPTIONLENGTH
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.25f))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    ElevatedButton(onClick = dismissEditDeckDetailsClicked) {
-                        Text("Cancel")
-                    }
-                    ElevatedButton(
-                        onClick = {
-                            confirmEditDeckDetailsClicked(editDeckName, editDeckDescription)
-                        },
-                        enabled = (
-                                editDeckName.length <= DECKNAMELENGTH &&
-                                editDeckName.isNotEmpty() &&
-                                editDeckDescription.length <= DECKDESCRIPTIONLENGTH &&
-                                editDeckDescription.isNotEmpty() &&
-                                ((editDeckName != oldDeckName) || (editDeckDescription != oldDeckDescription))
-                        )
-                    ) {
-                        Text("Done")
-                    }
-                }
             }
         }
     }
