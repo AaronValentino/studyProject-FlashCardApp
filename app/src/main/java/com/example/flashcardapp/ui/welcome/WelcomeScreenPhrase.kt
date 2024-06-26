@@ -7,7 +7,9 @@ import com.example.flashcardapp.R
 import com.example.flashcardapp.ui.welcome.WelcomeScreenPhrase.listOfWelcomePhraseId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 object WelcomeScreenPhrase {
@@ -35,9 +37,16 @@ object WelcomeScreenPhrase {
 class WelcomeScreenViewModel : ViewModel() {
     val TAG_WelcomeScreenViewModel = "WelcomeScreenViewModel"
     private val _welcomePhraseUiState = MutableStateFlow(0)
-    val welcomePhraseUiState = _welcomePhraseUiState.asStateFlow()
+    val welcomePhraseUiState: StateFlow<Int> = _welcomePhraseUiState.asStateFlow()
+
+    private val _logoUiState = MutableStateFlow(true)
+    val logoUiState: StateFlow<Boolean> = _logoUiState.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            delay(3000L)
+            _logoUiState.update { false }
+        }
         _welcomePhraseUiState.value = listOfWelcomePhraseId[listOfWelcomePhraseId.indices.random()]
         startLoop()
         Log.d(TAG_WelcomeScreenViewModel, "init_invoked")

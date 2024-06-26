@@ -1,6 +1,7 @@
 package com.example.flashcardapp.ui.welcome
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.flashcardapp.MainActivity
 import com.example.flashcardapp.R
 import com.example.flashcardapp.ui.theme.FlashCardAppTheme
@@ -45,6 +47,15 @@ class WelcomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        if (Build.VERSION.SDK_INT >= 33) {
+            installSplashScreen().apply {
+                setKeepOnScreenCondition {
+                    viewModel.logoUiState.value
+                }
+            }
+        }
+
         setContent {
             FlashCardAppTheme {
                 WelcomeScreen(

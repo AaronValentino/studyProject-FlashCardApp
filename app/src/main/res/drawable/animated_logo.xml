@@ -1,0 +1,335 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00105"
+        android:duration="1000" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00106"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00107"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00108"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00109"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00110"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00111"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00112"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00113"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00114"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00115"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00116"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00117"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00118"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00119"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00120"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00121"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00122"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00123"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00124"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00125"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00126"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00127"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00128"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00129"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00130"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00131"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00132"
+        android:duration="25" />
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00133" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00134" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00135" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00136" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00137" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00138" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00106" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00140" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00141" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00142" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00143" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00144" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00145" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00146" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00147" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00148" android:duration="25" />-->
+    <!--    <item android:drawable="@drawable/_024_06_26_21_47_04_00149" android:duration="25" />-->
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00150"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00151"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00152"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00153"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00154"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00155"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00156"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00157"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00158"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00159"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00160"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00161"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00162"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00163"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00164"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00165"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00166"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00167"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00168"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00169"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00170"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00171"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00172"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00173"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00174"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00175"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00176"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00177"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00178"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00179"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00180"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00181"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00182"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00183"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00184"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00185"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00186"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00187"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00188"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00189"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00190"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00191"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00192"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00193"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00194"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00195"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00196"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00197"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00198"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00199"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00200"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00201"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00202"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00203"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00204"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00205"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00206"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00207"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00208"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00209"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00210"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00211"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00212"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00213"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00214"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00215"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00216"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00217"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00218"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00219"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00220"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00221"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00222"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00223"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00224"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00225"
+        android:duration="25" />
+    <item
+        android:drawable="@drawable/_024_06_26_21_47_04_00226"
+        android:duration="25" />
+</animation-list>
