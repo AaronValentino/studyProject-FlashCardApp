@@ -26,6 +26,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -39,13 +40,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.R
 
 @Composable
 fun UserProfileScreen(
     topBar: @Composable () -> Unit,
-    backgroundBrush: Brush
+    backgroundBrush: Brush,
+    viewModel: UserProfileViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val motivationCard = randomMotivation((1..20).random())
+    viewModel.setMotivationPhrase(stringResource(motivationCard.phrase))
+    val motivationPhraseUiState = viewModel.motivationPhraseUiState.collectAsState()
+    
     val context = LocalContext.current
     var nameInEditMode by rememberSaveable {
         mutableStateOf(false)
@@ -140,19 +148,23 @@ fun UserProfileScreen(
                                         modifier = Modifier
                                             .clickable {
                                                 if (userNameToChange.length > 15) {
-                                                    Toast.makeText(
+                                                    Toast
+                                                        .makeText(
                                                             context,
                                                             context.getString(R.string.warning_invalid_username),
                                                             Toast.LENGTH_SHORT
-                                                        ).show()
+                                                        )
+                                                        .show()
                                                 } else {
                                                     userName = userNameToChange
                                                     nameInEditMode = false
-                                                    Toast.makeText(
+                                                    Toast
+                                                        .makeText(
                                                             context,
                                                             context.getString(R.string.success_username_changed),
                                                             Toast.LENGTH_SHORT
-                                                        ).show()
+                                                        )
+                                                        .show()
                                                 }
                                             }
                                             .sizeIn(minHeight = 32.dp)
@@ -194,36 +206,32 @@ fun UserProfileScreen(
                         defaultElevation = 20.dp
                     )
                 ) {
-                    val motivationCard = randomMotivation((1..20).random())
-
-                    motivationCard.let {
-                        Column(
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            text = motivationPhraseUiState.value,
+                            lineHeight = 28.sp,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .weight(1f)
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Spacer(modifier = Modifier.weight(1f))
-                            Text(
-                                text = stringResource(id = it.phrase),
-                                lineHeight = 28.sp,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp)
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
-                            Text(
-                                text = stringResource(
-                                    id = R.string.motivation_author_format,
-                                    stringResource(id = it.author)
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                textAlign = TextAlign.End,
-                                fontSize = 16.sp
-                            )
-                        }
+                                .padding(8.dp)
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            text = stringResource(
+                                id = R.string.motivation_author_format,
+                                stringResource(id = motivationCard.author)
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.End,
+                            fontSize = 16.sp
+                        )
                     }
                 }
             }

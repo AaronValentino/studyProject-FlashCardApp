@@ -9,6 +9,7 @@ import com.example.flashcardapp.card.AddNewCardViewModel
 import com.example.flashcardapp.deck.AddNewDeckViewModel
 import com.example.flashcardapp.deck.DeckListViewModel
 import com.example.flashcardapp.deck.SelectedDeckAndCardsDetailsViewModel
+import com.example.flashcardapp.user.UserProfileViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -34,6 +35,10 @@ object AppViewModelProvider {
                 this.createSavedStateHandle(),
                 flashardApplication().container.deckNCardRepository
             )
+        }
+
+        initializer {
+            UserProfileViewModel()
         }
     }
 }

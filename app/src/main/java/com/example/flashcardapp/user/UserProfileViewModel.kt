@@ -1,7 +1,31 @@
 package com.example.flashcardapp.user
 
 import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.flashcardapp.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class UserProfileViewModel : ViewModel() {
+    private val _motivationPhraseUiState = MutableStateFlow("")
+    val motivationPhraseUiState: StateFlow<String> = _motivationPhraseUiState.asStateFlow()
+
+    fun setMotivationPhrase(phrase: String) {
+        viewModelScope.launch {
+            for (x in phrase) {
+                _motivationPhraseUiState.update {
+                    it.plus(x)
+                }
+                delay(50L)
+            }
+        }
+    }
+}
 
 fun randomMotivation(randNum: Int): MotivationCard {
     return when (randNum)
