@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -30,6 +31,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
 import androidx.compose.material3.MaterialTheme as MaterialTheme1
@@ -57,8 +59,9 @@ fun DeckListScreen(
             contentAlignment = Alignment.Center
         ){
             LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 150.dp),
-                contentPadding = PaddingValues(12.dp)
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(12.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 items(uiState.value.listItem) {
                     GenerateCard(
@@ -102,12 +105,20 @@ private fun GenerateCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center // Remove this if the lines of code below are reactivated
         ) {
-            Text(
-                text = deckName,
-                style = MaterialTheme1.typography.displaySmall,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(2f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = deckName,
+                    style = MaterialTheme1.typography.bodyLarge,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    letterSpacing = (-1).sp
+                )
+            }
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = if (numOfCards <= 1) "$numOfCards card" else "$numOfCards cards",
