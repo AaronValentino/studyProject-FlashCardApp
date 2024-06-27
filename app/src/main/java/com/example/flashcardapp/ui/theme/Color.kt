@@ -1,6 +1,20 @@
 package com.example.flashcardapp.ui.theme
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+
+@Composable
+fun getCircleBrush(): Brush {
+    return Brush.linearGradient(
+        listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.error
+        )
+    )
+}
 
 // Green
 //val primaryLight = Color(0xFF286A48)

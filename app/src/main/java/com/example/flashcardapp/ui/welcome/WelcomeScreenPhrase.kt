@@ -1,6 +1,5 @@
 package com.example.flashcardapp.ui.welcome
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashcardapp.R
@@ -35,7 +34,6 @@ object WelcomeScreenPhrase {
 }
 
 class WelcomeScreenViewModel : ViewModel() {
-    val TAG_WelcomeScreenViewModel = "WelcomeScreenViewModel"
     private val _welcomePhraseUiState = MutableStateFlow(0)
     val welcomePhraseUiState: StateFlow<Int> = _welcomePhraseUiState.asStateFlow()
 
@@ -49,18 +47,13 @@ class WelcomeScreenViewModel : ViewModel() {
         }
         _welcomePhraseUiState.value = listOfWelcomePhraseId[listOfWelcomePhraseId.indices.random()]
         startLoop()
-        Log.d(TAG_WelcomeScreenViewModel, "init_invoked")
     }
 
     private fun repeatInfinite() {
-        var runCountLocal = 1
-        Log.d(TAG_WelcomeScreenViewModel, "Run started")
         viewModelScope.launch {
             while (true) {
                 delay(2000L)
                 _welcomePhraseUiState.value = listOfWelcomePhraseId[listOfWelcomePhraseId.indices.random()]
-                Log.d(TAG_WelcomeScreenViewModel, "viewModelScope, Running $runCountLocal")
-                runCountLocal++
             }
         }
     }

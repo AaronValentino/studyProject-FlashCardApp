@@ -119,7 +119,6 @@ fun FlashardNavHost(
             AddNewCardScreen(
                 topBar = { TopAppBarNoIcon(titleText = addNewCard.deckName) },
                 backgroundBrush = backgroundBrush,
-                deckId = addNewCard.deckId,
                 cancelCreateClicked = {
                     navController.navigateUp()
                     navController.navigateUp()

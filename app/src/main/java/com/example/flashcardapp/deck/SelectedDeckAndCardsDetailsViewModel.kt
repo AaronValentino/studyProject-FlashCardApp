@@ -1,6 +1,5 @@
 package com.example.flashcardapp.deck
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -52,7 +51,6 @@ class SelectedDeckAndCardsDetailsViewModel(
         viewModelScope.launch{
             delay(1000L)
             selectedDeckCardsUiState.value.let {
-                Log.d("viewModelScopeToUpdateDeck", "Launched")
                 updateDeckDetails(
                     it.selectedDeck.name,
                     it.selectedDeck.description,
@@ -119,7 +117,6 @@ class SelectedDeckAndCardsDetailsViewModel(
 
     // Input the new question and answer into the state for updating
     fun updateCardToBeEditedDetails(question: String, answer: String) {
-        Log.d("CheckUpdateCard", "updateCardToBeEditedDetails")
         _selectedCardDetailsUiState.update { currentState ->
             currentState.copy(
                 question = question,
@@ -129,7 +126,6 @@ class SelectedDeckAndCardsDetailsViewModel(
     }
 
     suspend fun updateCardDetails() {
-        Log.d("CheckUpdateCard", "updateCardDetails")
         deckNCardRepository.updateCard(selectedCardDetailsUiState.value)
     }
 

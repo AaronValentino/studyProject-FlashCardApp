@@ -1,6 +1,5 @@
 package com.example.flashcardapp.user
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,7 +51,6 @@ fun UserProfileScreen(
     viewModel: UserProfileViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val context = LocalContext.current
-    Log.d("HomeScreen", "run motivation card")
 
     viewModel.runMotivationSpeech(context)
     val motivationPhraseUiState = viewModel.motivationPhraseUiState.collectAsState()

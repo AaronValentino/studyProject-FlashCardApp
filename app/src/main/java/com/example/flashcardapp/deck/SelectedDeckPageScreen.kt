@@ -52,6 +52,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -63,6 +66,7 @@ import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.card.EditCardDialog
 import com.example.flashcardapp.data.Card
 import com.example.flashcardapp.ui.theme.Shape
+import com.example.flashcardapp.ui.theme.getCircleBrush
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -140,12 +144,30 @@ fun SelectedDeckPageScreen(
         )
     }
 
+    val circleBrush = getCircleBrush()
+
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
                 .padding(paddingValues)
                 .background(backgroundBrush)
                 .fillMaxSize()
+                .drawBehind {
+                    for (value in 1..(size.maxDimension * 2 / size.minDimension).toInt()) {
+                        val radius = (0..(size.minDimension * value / 4).toInt())
+                            .random().toFloat()
+                        val x = ((size.width.toInt() / (-2))..size.width.toInt())
+                            .random().toFloat()
+                        val y = ((size.height.toInt() / 2)..size.height.toInt())
+                            .random().toFloat()
+                        drawCircle(
+                            brush = circleBrush,
+                            radius = radius,
+                            center = Offset(x = x, y = y),
+                            blendMode = BlendMode.Softlight
+                        )
+                    }
+                },
         ) {
             ElevatedCard(
                 modifier = Modifier
@@ -159,7 +181,8 @@ fun SelectedDeckPageScreen(
                         .fillMaxSize()
                         .padding(
                             vertical = 20.dp,
-                            horizontal = 16.dp),
+                            horizontal = 16.dp
+                        ),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

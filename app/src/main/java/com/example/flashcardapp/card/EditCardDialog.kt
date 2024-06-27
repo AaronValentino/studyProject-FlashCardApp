@@ -1,6 +1,5 @@
 package com.example.flashcardapp.card
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,8 +36,6 @@ fun EditCardDialog(
     viewModel: SelectedDeckAndCardsDetailsViewModel
 ) {
     val currentCardState = viewModel.selectedCardDetailsUiState.collectAsState()
-
-    Log.d("CheckCard", "$currentCardState")
 
     var editCardQuestion by rememberSaveable {
         mutableStateOf(currentCardState.value.question)

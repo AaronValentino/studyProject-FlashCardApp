@@ -1,6 +1,5 @@
 package com.example.flashcardapp.card
 
-import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.compose.foundation.background
@@ -47,10 +46,8 @@ fun AddNewCardScreen(
     topBar: @Composable () -> Unit,
     backgroundBrush: Brush,
     viewModel: AddNewCardViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    deckId: Int,
     cancelCreateClicked: () -> Unit
 ) {
-    Log.d("Check Passed in deckId", deckId.toString())
     val context = LocalContext.current
 
     var currentNewCardQuestion by rememberSaveable {

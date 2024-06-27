@@ -1,6 +1,5 @@
 package com.example.flashcardapp.deck
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,7 +48,6 @@ fun AddNewDeckScreen(
     newDeckId: Int,
     cancelCreateClicked: () -> Unit
 ) {
-    Log.d("Check Passed in newDeckId", newDeckId.toString())
     var deckName by rememberSaveable {
         mutableStateOf("New Deck ${(1..999).random()}")
     }

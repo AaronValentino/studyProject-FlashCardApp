@@ -1,6 +1,5 @@
 package com.example.flashcardapp.deck
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,6 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.ui.theme.getCircleBrush
 import androidx.compose.material3.MaterialTheme as MaterialTheme1
 
 @Composable
@@ -46,7 +49,8 @@ fun DeckListScreen(
 ) {
     val uiState = viewModel.deckListUiState.collectAsState()
     val deckSize = (uiState.value.listItem.size + 1)
-    Log.d("Check Deck Size", deckSize.toString())
+
+    val circleBrush = getCircleBrush()
 
     Scaffold(
         topBar = topBar
@@ -55,7 +59,23 @@ fun DeckListScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .background(brush = backgroundBrush)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .drawBehind {
+                    for (value in 1..(size.maxDimension * 2 / size.minDimension).toInt()) {
+                        val radius = (0..(size.minDimension * value / 4).toInt())
+                            .random().toFloat()
+                        val x = ((size.width.toInt() / (-2))..size.width.toInt())
+                            .random().toFloat()
+                        val y = ((size.height.toInt() / 2)..size.height.toInt())
+                            .random().toFloat()
+                        drawCircle(
+                            brush = circleBrush,
+                            radius = radius,
+                            center = Offset(x = x, y = y),
+                            blendMode = BlendMode.Softlight
+                        )
+                    }
+                },
             contentAlignment = Alignment.Center
         ){
             LazyVerticalGrid(

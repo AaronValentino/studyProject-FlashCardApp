@@ -1,7 +1,6 @@
 package com.example.flashcardapp.user
 
 import android.content.Context
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,7 +22,6 @@ class UserProfileViewModel : ViewModel() {
     val motivationDoneUiState: StateFlow<Boolean> = _motivationDoneUiState.asStateFlow()
 
     fun runMotivationSpeech(context: Context) {
-        Log.d("_motivationDoneUiState", "Check before: ${motivationDoneUiState.value}")
         val motivationCard = randomMotivation((1..20).random())
         _motivationAuthorUiState.update { context.getString(motivationCard.author) }
         _motivationPhraseUiState.update { "" }
@@ -31,7 +29,6 @@ class UserProfileViewModel : ViewModel() {
 
         viewModelScope.launch {
             _motivationDoneUiState.update { false }
-            Log.d("_motivationDoneUiState", "${motivationDoneUiState.value}")
             val job = viewModelScope.launch {
                 for (x in motivationPhrase) {
                     _motivationPhraseUiState.update {
@@ -45,7 +42,6 @@ class UserProfileViewModel : ViewModel() {
             _motivationDoneUiState.update {
                 job.isCompleted
             }
-            Log.d("_motivationDoneUiState", "${motivationDoneUiState.value}")
         }
     }
 }

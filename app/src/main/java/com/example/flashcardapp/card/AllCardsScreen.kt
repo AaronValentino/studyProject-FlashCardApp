@@ -1,6 +1,5 @@
 package com.example.flashcardapp.card
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.InfiniteRepeatableSpec
 import androidx.compose.animation.core.RepeatMode
@@ -57,6 +56,7 @@ import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.data.Card
 import com.example.flashcardapp.deck.SelectedDeckAndCardsDetailsViewModel
 import com.example.flashcardapp.ui.theme.Shape
+import com.example.flashcardapp.ui.theme.getCircleBrush
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -91,14 +91,6 @@ fun AllCardsScreen(
         )
     }
 
-    val circleBrush: Brush = Brush.linearGradient(
-        listOf(
-            MaterialTheme.colorScheme.primary,
-            MaterialTheme.colorScheme.secondary,
-            MaterialTheme.colorScheme.error
-        )
-    )
-
     var expandAll by rememberSaveable {
         mutableStateOf(false)
     }
@@ -106,6 +98,8 @@ fun AllCardsScreen(
     var editMode by rememberSaveable {
         mutableStateOf(false)
     }
+
+    val circleBrush = getCircleBrush()
 
     Scaffold(
         topBar = topBar
@@ -116,16 +110,13 @@ fun AllCardsScreen(
                 .background(brush = backgroundBrush)
                 .fillMaxSize()
                 .drawBehind {
-                    for (value in 1..(size.height * 2 / size.width).toInt()) {
+                    for (value in 1..(size.maxDimension * 2 / size.minDimension).toInt()) {
                         val radius = (0..(size.minDimension * value / 4).toInt())
-                            .random()
-                            .toFloat()
-                        val x = ((size.width.toInt() / (-2))..size.width.toInt() * value)
-                            .random()
-                            .toFloat()
+                            .random().toFloat()
+                        val x = ((size.width.toInt() / (-2))..size.width.toInt())
+                            .random().toFloat()
                         val y = ((size.height.toInt() / 2)..size.height.toInt())
-                            .random()
-                            .toFloat()
+                            .random().toFloat()
                         drawCircle(
                             brush = circleBrush,
                             radius = radius,
@@ -133,7 +124,7 @@ fun AllCardsScreen(
                             blendMode = Softlight
                         )
                     }
-                }
+                },
         ) {
             Box(
                 modifier = Modifier.fillMaxSize()
@@ -177,7 +168,6 @@ fun AllCardsScreen(
                         onClickedGoToLessons = onClickedGoToLessons,
                         onClickedExpandAll = {
                             expandAll = !expandAll
-                            Log.d("expandAll", expandAll.toString())
                         },
                         expandAll = expandAll
                     )
