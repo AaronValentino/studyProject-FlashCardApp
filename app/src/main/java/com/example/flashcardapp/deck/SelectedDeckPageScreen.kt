@@ -132,12 +132,18 @@ fun SelectedDeckPageScreen(
         EditCardDialog(
             confirmEditCardDetailsClicked = {
                 coroutineScope.launch {
-                    viewModel.updateCardDetails()
+                    viewModel.updateSelectedCardDetailsToDatabase()
                     delay(1000L)
                     editCardDetails = false
                 }
             },
             dismissEditCardDetailsClicked = {
+                editCardDetails = false
+            },
+            confirmDeleteCardClicked = {
+                coroutineScope.launch {
+                    viewModel.deleteSelectedCard()
+                }
                 editCardDetails = false
             },
             viewModel = viewModel
@@ -264,7 +270,7 @@ fun SelectedDeckPageScreen(
                                     )
                                 },
                                 onClickedEditCardDetails = {
-                                    viewModel.inputCardToBeEditedFullDetails(it)
+                                    viewModel.setSelectedCardFullDetails(it)
                                     editCardDetails = true
                                 }
                             )

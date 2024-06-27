@@ -19,6 +19,9 @@ interface CardDao {
     @Delete
     suspend fun delete(card: Card)
 
+    @Query("DELETE FROM cards WHERE deckId = :deckId")
+    suspend fun deleteAllCards(deckId: Int)
+
     @Query("SELECT * FROM cards WHERE cardId = :cardId")
     fun getIndividualDeckCard(cardId: Int): Flow<Card>
 

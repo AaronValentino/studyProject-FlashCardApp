@@ -11,6 +11,8 @@ interface DeckNCardRepository {
 
     suspend fun deleteCard(card: Card)
 
+    suspend fun deleteAllCards(deckId: Int)
+
     fun getIndividualDeckCardStream(cardId: Int): Flow<Card>
 
     fun getAllDeckCardsStream(deckId: Int): Flow<List<Card>>
@@ -36,6 +38,8 @@ class LocalDeckNCardRepository(
     override suspend fun updateCard(card: Card) = cardDao.update(card)
 
     override suspend fun deleteCard(card: Card) = cardDao.delete(card)
+
+    override suspend fun deleteAllCards(deckId: Int) = cardDao.deleteAllCards(deckId)
 
     override fun getIndividualDeckCardStream(cardId: Int): Flow<Card> = cardDao.getIndividualDeckCard(cardId)
 

@@ -22,7 +22,6 @@ class SelectedDeckAndCardsDetailsViewModel(
     savedStateHandle: SavedStateHandle,
     private val deckNCardRepository: DeckNCardRepository
 ) : ViewModel() {
-    private var deckStatus = true
     val deckId: Int = checkNotNull(savedStateHandle["deckId"])
 
     val selectedDeckCardsUiState: StateFlow<SelectedDeckUiState> =
@@ -43,7 +42,6 @@ class SelectedDeckAndCardsDetailsViewModel(
         )
 
     init {
-        deckStatus = true
         autoUpdateDeckDetails()
     }
 
@@ -102,7 +100,7 @@ class SelectedDeckAndCardsDetailsViewModel(
     val selectedCardDetailsUiState: StateFlow<Card> = _selectedCardDetailsUiState.asStateFlow()
 
     // For the dialog to get the card's details before editing
-    fun inputCardToBeEditedFullDetails(currentCard: Card) {
+    fun setSelectedCardFullDetails(currentCard: Card) {
         _selectedCardDetailsUiState.update { currentState ->
             currentState.copy(
                 deckId = currentCard.deckId,
@@ -116,7 +114,7 @@ class SelectedDeckAndCardsDetailsViewModel(
     }
 
     // Input the new question and answer into the state for updating
-    fun updateCardToBeEditedDetails(question: String, answer: String) {
+    fun updateSelectedCardNewDetailsTemp(question: String, answer: String) {
         _selectedCardDetailsUiState.update { currentState ->
             currentState.copy(
                 question = question,
@@ -125,8 +123,18 @@ class SelectedDeckAndCardsDetailsViewModel(
         }
     }
 
-    suspend fun updateCardDetails() {
+    suspend fun updateSelectedCardDetailsToDatabase() {
         deckNCardRepository.updateCard(selectedCardDetailsUiState.value)
+    }
+
+    suspend fun deleteSelectedCard() {
+        deckNCardRepository.deleteCard(selectedCardDetailsUiState.value)
+        autoUpdateDeckDetails()
+    }
+
+    suspend fun deleteAllCards() {
+        deckNCardRepository.deleteAllCards(deckId)
+        autoUpdateDeckDetails()
     }
 
     companion object {

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -51,6 +52,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.data.Card
@@ -79,7 +81,7 @@ fun AllCardsScreen(
         EditCardDialog(
             confirmEditCardDetailsClicked = {
                 coroutineScope.launch {
-                    viewModel.updateCardDetails()
+                    viewModel.updateSelectedCardDetailsToDatabase()
                     delay(1000L)
                     editCardDetails = false
                 }
@@ -87,7 +89,32 @@ fun AllCardsScreen(
             dismissEditCardDetailsClicked = {
                 editCardDetails = false
             },
+            confirmDeleteCardClicked = {
+                coroutineScope.launch {
+                    viewModel.deleteSelectedCard()
+                }
+                editCardDetails = false
+            },
             viewModel = viewModel
+        )
+    }
+
+    var showConfirmDeleteAllCardsDialog by remember {
+        mutableStateOf(false)
+    }
+
+    if (showConfirmDeleteAllCardsDialog) {
+        ConfirmDeleteAllCardsDialog(
+            confirmDeleteAllCardsClicked = {
+                coroutineScope.launch {
+                    viewModel.deleteAllCards()
+                    delay(1000L)
+                    showConfirmDeleteAllCardsDialog = false
+                }
+            },
+            dismissDeleteAllCardsClicked = {
+                showConfirmDeleteAllCardsDialog = false
+            }
         )
     }
 
@@ -112,11 +139,14 @@ fun AllCardsScreen(
                 .drawBehind {
                     for (value in 1..(size.maxDimension * 2 / size.minDimension).toInt()) {
                         val radius = (0..(size.minDimension * value / 4).toInt())
-                            .random().toFloat()
+                            .random()
+                            .toFloat()
                         val x = ((size.width.toInt() / (-2))..size.width.toInt())
-                            .random().toFloat()
+                            .random()
+                            .toFloat()
                         val y = ((size.height.toInt() / 2)..size.height.toInt())
-                            .random().toFloat()
+                            .random()
+                            .toFloat()
                         drawCircle(
                             brush = circleBrush,
                             radius = radius,
@@ -146,9 +176,10 @@ fun AllCardsScreen(
                 } else {
                     AnimatedContent(targetState = expandAll, label = "") {
                         GenerateCards(
+                            onClickedDeleteAllCards = { showConfirmDeleteAllCardsDialog = !showConfirmDeleteAllCardsDialog },
                             allCards = allCards,
                             onClickedEditButton = { card ->
-                                viewModel.inputCardToBeEditedFullDetails(card)
+                                viewModel.setSelectedCardFullDetails(card)
                                 editCardDetails = true
                             },
                             editMode = editMode,
@@ -179,6 +210,7 @@ fun AllCardsScreen(
 
 @Composable
 fun GenerateCards(
+    onClickedDeleteAllCards: () -> Unit,
     allCards: List<Card>,
     onClickedEditButton: (Card) -> Unit,
     editMode: Boolean,
@@ -258,12 +290,69 @@ fun GenerateCards(
                 }
             }
         }
-        item("bottom_space") {
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(0.5f)
-            )
+
+        if (editMode) {
+            item("delete_all_cards") {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .clickable { onClickedDeleteAllCards() }
+                            .fillMaxSize(0.8f)
+                            .aspectRatio(0.8f)
+                            .padding(8.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.error
+                        )
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(20.dp),
+                                contentAlignment = Alignment.Center
+                            ){
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = "Delete all cards",
+                                        modifier = Modifier.fillMaxWidth(),
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                    Text(
+                                        text = "🗑️",
+                                        modifier = Modifier.fillMaxWidth(),
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.displaySmall
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for (x in 1..2) {
+            item("bottom_space$x") {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(0.5f)
+                )
+            }
         }
     }
 }
@@ -349,38 +438,47 @@ fun GenerateButtons(
     }
 }
 
-//@Composable
-//fun AddNewCard(
-//    onClickedAddNewCard: () -> Unit
-//) {
-//    val infiniteTransition = rememberInfiniteTransition(label = "")
-//    val infiniteRotationColor = infiniteTransition.animateColor(
-//        initialValue = MaterialTheme.colorScheme.primary,
-//        targetValue = MaterialTheme.colorScheme.onPrimary,
-//        animationSpec = InfiniteRepeatableSpec(
-//            animation = tween(1500),
-//            repeatMode = RepeatMode.Reverse
-//        ), label = ""
-//    )
-//
-//    AnimatedContent(targetState = infiniteRotationColor, label = "") {
-//        Card(
-//            modifier = Modifier
-//                .clickable { onClickedAddNewCard() }
-//                .fillMaxHeight(0.8f)
-//                .aspectRatio(0.2f),
-//            border = BorderStroke(
-//                width = 2.dp,
-//                color = it.value
-//            )
-//        ) {
-//            Icon(
-//                imageVector = Icons.Default.Add,
-//                contentDescription = "Add cards",
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(8.dp)
-//            )
-//        }
-//    }
-//}
+@Composable
+fun ConfirmDeleteAllCardsDialog(
+    confirmDeleteAllCardsClicked: () -> Unit,
+    dismissDeleteAllCardsClicked: () -> Unit
+) {
+    Dialog(onDismissRequest = dismissDeleteAllCardsClicked) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .aspectRatio(1f)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "Confirm delete all cards?",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    ElevatedButton(onClick = dismissDeleteAllCardsClicked) {
+                        Text("Cancel")
+                    }
+                    ElevatedButton(onClick = confirmDeleteAllCardsClicked) {
+                        Text("Yes")
+                    }
+                }
+            }
+        }
+    }
+}

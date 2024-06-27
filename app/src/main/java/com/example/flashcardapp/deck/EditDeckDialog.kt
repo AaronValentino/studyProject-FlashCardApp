@@ -64,7 +64,7 @@ fun EditDeckDialog(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(0.6f)
+                .aspectRatio(0.5f)
         ) {
             Card(
                 modifier = Modifier
