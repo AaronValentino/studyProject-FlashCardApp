@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.flashcardapp.MainActivity
 import com.example.flashcardapp.R
 import com.example.flashcardapp.card.AddNewCardScreen
 import com.example.flashcardapp.card.AllCardsScreen
@@ -44,7 +45,8 @@ import com.example.flashcardapp.user.UserProfileScreen
 // Navigation Graph
 @Composable
 fun FlashardNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    mainActivity: MainActivity
 ) {
     // Background Brush
     val backgroundBrush = Brush.verticalGradient(
@@ -69,7 +71,8 @@ fun FlashardNavHost(
                         onIconButtonClicked = { navController.navigate(UserProfile) }
                     )
                 },
-                backgroundBrush = backgroundBrush
+                backgroundBrush = backgroundBrush,
+                navigateUp = { mainActivity.finish() }
             )
         }
         composable<DeckList> {

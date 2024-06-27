@@ -1,15 +1,18 @@
 package com.example.flashcardapp.ui.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
@@ -31,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
 import com.example.flashcardapp.R
@@ -41,6 +45,7 @@ fun HomeScreen(
     onButtonClicked: () -> Unit,
     topBar: @Composable () -> Unit,
     backgroundBrush: Brush,
+    navigateUp: () -> Unit,
     viewModel: UserProfileViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val context = LocalContext.current
@@ -55,6 +60,20 @@ fun HomeScreen(
     val motivationPhraseUiState = viewModel.motivationPhraseUiState.collectAsState()
     val motivationAuthorUiState = viewModel.motivationAuthorUiState.collectAsState()
     val motivationDoneUiState = viewModel.motivationDoneUiState.collectAsState()
+
+    var showConfirmExitAppDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+    BackHandler {
+        showConfirmExitAppDialog = true
+    }
+
+    if (showConfirmExitAppDialog) {
+        ConfirmExitAppDialog(
+            confirmExitAppClicked = navigateUp,
+            dismissExitAppClicked = { showConfirmExitAppDialog = false }
+        )
+    }
 
     Scaffold(
         topBar = topBar
@@ -134,6 +153,51 @@ fun HomeScreen(
                     text = stringResource(id = R.string.home_screen_start_button),
                     style = MaterialTheme.typography.bodyLarge
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun ConfirmExitAppDialog(
+    confirmExitAppClicked: () -> Unit,
+    dismissExitAppClicked: () -> Unit
+) {
+    Dialog(onDismissRequest = dismissExitAppClicked) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .aspectRatio(1f)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "Confirm exit?",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    ElevatedButton(onClick = dismissExitAppClicked) {
+                        Text("Back")
+                    }
+                    ElevatedButton(onClick = confirmExitAppClicked) {
+                        Text("Yes")
+                    }
+                }
             }
         }
     }

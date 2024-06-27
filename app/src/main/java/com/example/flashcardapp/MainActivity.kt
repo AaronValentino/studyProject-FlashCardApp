@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             FlashCardAppTheme {
-                FlashardApp()
+                FlashardApp(mainActivity = this)
             }
         }
     }
