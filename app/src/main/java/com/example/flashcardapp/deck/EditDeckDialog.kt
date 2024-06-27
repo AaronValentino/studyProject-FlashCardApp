@@ -152,7 +152,6 @@ fun EditDeckDialog(
                                     editDeckName.length <= DeckConstant.DECKNAMELENGTH &&
                                             editDeckName.isNotEmpty() &&
                                             editDeckDescription.length <= DeckConstant.DECKDESCRIPTIONLENGTH &&
-                                            editDeckDescription.isNotEmpty() &&
                                             ((editDeckName != oldDeckName) || (editDeckDescription != oldDeckDescription))
                                     )
                         ) {

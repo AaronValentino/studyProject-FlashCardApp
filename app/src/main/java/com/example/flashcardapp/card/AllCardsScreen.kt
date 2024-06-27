@@ -340,7 +340,7 @@ fun GenerateCards(
                     Card(
                         modifier = Modifier
                             .clickable { onClickedDeleteAllCards() }
-                            .fillMaxSize(0.8f)
+                            .fillMaxSize(0.9f)
                             .aspectRatio(0.8f)
                             .padding(8.dp),
                         colors = CardDefaults.cardColors(

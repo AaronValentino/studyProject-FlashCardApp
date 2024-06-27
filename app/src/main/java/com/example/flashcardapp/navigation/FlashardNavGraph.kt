@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -77,13 +76,7 @@ fun FlashardNavHost(
         }
         composable<DeckList> {
             DeckListScreen(
-                topBar = {
-                    TopAppBarNoIcon(
-                        titleText = "Deck List",
-                        showBackButton = true,
-                        onBackButtonClicked = { navController.navigateUp() }
-                    )
-                },
+                topBar = { TopAppBarNoIcon(titleText = "Deck List") },
                 backgroundBrush = backgroundBrush,
                 cardClicked = { deckId -> navController.navigate(SelectedDeckPage(deckId)) },
                 addNewDeckClicked = { newDeckId -> navController.navigate(AddNewDeck(newDeckId)) }
@@ -132,13 +125,7 @@ fun FlashardNavHost(
         composable<AllCards> {
             val allCards: AllCards = it.toRoute()
             AllCardsScreen(
-                topBar = {
-                    TopAppBarNoIcon(
-                        titleText = allCards.deckName,
-                        showBackButton = true,
-                        onBackButtonClicked = { navController.navigateUp() }
-                    )
-                },
+                topBar = { TopAppBarNoIcon(titleText = allCards.deckName,) },
                 backgroundBrush = backgroundBrush,
                 onClickedGoToLessons = {  }
             )
@@ -218,8 +205,6 @@ fun TopAppBarWithIcon(
 // No Icon but with back button
 fun TopAppBarNoIcon(
     titleText: String,
-    showBackButton: Boolean = false,
-    onBackButtonClicked: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -231,7 +216,7 @@ fun TopAppBarNoIcon(
                         .padding(
                             top = 10.dp,
                             end = 12.dp,
-                            start = if (titleText.length > 9) 60.dp else 12.dp
+                            start = 12.dp
                         ),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -239,17 +224,6 @@ fun TopAppBarNoIcon(
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
-                if (showBackButton) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "back button",
-                        tint = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier
-                            .padding(top = 4.dp)
-                            .clickable { onBackButtonClicked() }
-                            .sizeIn(minWidth = 50.dp, minHeight = 55.dp)
-                    )
-                }
             }
         },
         windowInsets = WindowInsets(top = 40.dp),

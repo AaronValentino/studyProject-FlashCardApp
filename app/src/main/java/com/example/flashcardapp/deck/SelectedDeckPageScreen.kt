@@ -32,6 +32,8 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -152,6 +154,10 @@ fun SelectedDeckPageScreen(
         )
     }
 
+    var reverseOrder by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val circleBrush = getCircleBrush()
     val infiniteChangingNumX1 = infiniteTransition.animateValue(
         initialValue = 0f,
@@ -193,8 +199,10 @@ fun SelectedDeckPageScreen(
                 .fillMaxSize()
                 .drawBehind {
                     val radius = infiniteChangingNumOffset.value * size.minDimension / 250
-                    val x = (size.width/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
-                    val y = (size.height/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    val x =
+                        (size.width / 2) + (infiniteChangingNumX1.value * infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    val y =
+                        (size.height / 2) + (infiniteChangingNumX1.value * infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
                     drawCircle(
                         brush = circleBrush,
                         radius = radius,
@@ -291,20 +299,74 @@ fun SelectedDeckPageScreen(
                                 }
                             )
                         } else {
-                            GenerateLazyRowForCards(
-                                infiniteRotationColor = infiniteRotationColor,
-                                uiState = uiState,
-                                onClickedAddNewCard = {
-                                    onClickedAddNewCard(
-                                        uiState.value.selectedDeck.deckId,
-                                        uiState.value.selectedDeck.name
-                                    )
-                                },
-                                onClickedEditCardDetails = {
-                                    viewModel.setSelectedCardFullDetails(it)
-                                    editCardDetails = true
+                            Column (
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(vertical = 16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Row (
+                                    modifier = Modifier.fillMaxWidth()
+                                ){
+                                    AnimatedContent(
+                                        targetState = infiniteRotationColor,
+                                        label = ""
+                                    ) {
+                                        Card(
+                                            modifier = Modifier
+                                                .clickable {
+                                                    onClickedAddNewCard(
+                                                        uiState.value.selectedDeck.deckId,
+                                                        uiState.value.selectedDeck.name
+                                                    )
+                                                }
+                                                .fillMaxWidth(0.5f)
+                                                .aspectRatio(4f),
+                                            border = BorderStroke(
+                                                width = 2.dp,
+                                                color = it.value
+                                            )
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Add,
+                                                contentDescription = "Add cards",
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(8.dp)
+                                            )
+                                        }
+                                    }
+                                    Card(
+                                        modifier = Modifier
+                                            .clickable { reverseOrder = !reverseOrder }
+                                            .fillMaxWidth()
+                                            .aspectRatio(4f)
+                                            .padding(horizontal = 16.dp),
+                                        border = BorderStroke(
+                                            width = 2.dp,
+                                            color = MaterialTheme.colorScheme.secondary
+                                        )
+                                    ) {
+                                        Icon(
+                                            imageVector =
+                                                if (!reverseOrder) Icons.AutoMirrored.Filled.KeyboardArrowLeft
+                                                else Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                            contentDescription = "Change cards' ordering",
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(8.dp)
+                                        )
+                                    }
                                 }
-                            )
+                                GenerateLazyRowForCards(
+                                    uiState = uiState,
+                                    onClickedEditCardDetails = {
+                                        viewModel.setSelectedCardFullDetails(it)
+                                        editCardDetails = true
+                                    },
+                                    reverseOrder = reverseOrder
+                                )
+                            }
                         }
                     }
                     Row(
@@ -402,10 +464,9 @@ fun NoCardsAddNewCard(
 
 @Composable
 fun GenerateLazyRowForCards(
-    infiniteRotationColor: State<Color>,
     uiState: State<SelectedDeckUiState>,
-    onClickedAddNewCard: () -> Unit,
-    onClickedEditCardDetails: (Card) -> Unit
+    onClickedEditCardDetails: (Card) -> Unit,
+    reverseOrder: Boolean = false
 ) {
     LazyRow(
         modifier = Modifier
@@ -413,31 +474,10 @@ fun GenerateLazyRowForCards(
             .aspectRatio(0.8f),
         contentPadding = PaddingValues(
             vertical = 16.dp),
+        reverseLayout = reverseOrder,
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        item("add_new_card") {
-            AnimatedContent(targetState = infiniteRotationColor, label = "") {
-                Card(
-                    modifier = Modifier
-                        .clickable { onClickedAddNewCard() }
-                        .fillMaxHeight(0.9f)
-                        .aspectRatio(0.15f),
-                    border = BorderStroke(
-                        width = 2.dp,
-                        color = it.value
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add cards",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp)
-                    )
-                }
-            }
-        }
         items(uiState.value.deckCards) {
             val questionAnswer: Map<QuestionAnswer, String> = mapOf(
                 QuestionAnswer.QUESTION to it.question,
