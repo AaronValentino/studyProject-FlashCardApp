@@ -246,7 +246,7 @@ fun SelectedDeckPageScreen(
                         )
                     }
                     Box(
-                        modifier = Modifier.fillMaxSize(0.9f),
+                        modifier = Modifier.fillMaxSize(0.90f),
                         contentAlignment = Alignment.Center
                     ) {
                         if (uiState.value.deckCards.isEmpty()) {
@@ -277,7 +277,7 @@ fun SelectedDeckPageScreen(
                         }
                     }
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxSize(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         ElevatedButton(
@@ -390,8 +390,8 @@ fun GenerateLazyRowForCards(
                 Card(
                     modifier = Modifier
                         .clickable { onClickedAddNewCard() }
-                        .fillMaxHeight(0.8f)
-                        .aspectRatio(0.2f),
+                        .fillMaxHeight(0.9f)
+                        .aspectRatio(0.15f),
                     border = BorderStroke(
                         width = 2.dp,
                         color = it.value
@@ -450,8 +450,8 @@ fun GenerateLazyRowForCards(
                                     QuestionAnswer.QUESTION
                                 }
                             }
-                            .fillMaxSize(0.8f)
-                            .aspectRatio(0.80f)
+                            .fillMaxSize(0.9f)
+                            .aspectRatio(0.75f)
                             .padding(horizontal = 8.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = if (contentDisplay == QuestionAnswer.QUESTION) {
@@ -471,7 +471,9 @@ fun GenerateLazyRowForCards(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
-                                textAlign = TextAlign.Center
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.bodyLarge,
+                                lineHeight = 24.sp
                             )
                         }
                     }

@@ -52,6 +52,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
@@ -219,7 +220,7 @@ fun GenerateCards(
 ) {
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(8.dp),
         modifier = modifier.fillMaxWidth()
     ) {
         items(allCards) {
@@ -234,7 +235,7 @@ fun GenerateCards(
                 Card(
                     modifier = Modifier
                         .clickable { showAnswer = !showAnswer }
-                        .fillMaxSize(0.8f)
+                        .fillMaxSize(0.9f)
                         .aspectRatio(if (showAnswer) 0.5f else 0.8f)
                         .padding(8.dp),
                 ) {
@@ -247,27 +248,35 @@ fun GenerateCards(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .fillMaxHeight(if (showAnswer) 0.5f else 1f)
-                                .padding(20.dp),
+                                .padding(12.dp),
                             contentAlignment = Alignment.Center
                         ){
                             Text(
                                 text = it.question,
                                 modifier = Modifier
                                     .fillMaxWidth(),
-                                textAlign = TextAlign.Center
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.bodyLarge,
+                                lineHeight = 24.sp
                             )
                         }
                         if (showAnswer) {
                             Box(
-                                modifier = Modifier.fillMaxHeight(),
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .background(
+                                        color = MaterialTheme.colorScheme.tertiary
+                                    ),
                                 contentAlignment = Alignment.Center
                             ){
                                 Text(
                                     text = it.answer,
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(20.dp),
-                                    textAlign = TextAlign.Center
+                                        .fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    lineHeight = 24.sp,
+                                    color = MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                         }

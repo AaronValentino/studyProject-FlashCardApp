@@ -34,7 +34,7 @@ class UserProfileViewModel : ViewModel() {
                     _motivationPhraseUiState.update {
                         it.plus(x)
                     }
-                    delay(50L)
+                    delay(25L)
                 }
             }
             job.join()
