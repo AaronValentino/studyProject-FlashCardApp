@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,9 +98,10 @@ fun HomeScreen(
                     Text(
                         text = motivationPhraseUiState.value,
                         style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colorScheme.primary,
-                        lineHeight = 32.sp,
-                        letterSpacing = 2.sp,
+                        lineHeight = 44.sp,
+                        letterSpacing = 0.sp,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
