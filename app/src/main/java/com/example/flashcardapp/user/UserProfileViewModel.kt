@@ -2,6 +2,7 @@ package com.example.flashcardapp.user
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashcardapp.R
@@ -34,7 +35,7 @@ class UserProfileViewModel : ViewModel() {
                     _motivationPhraseUiState.update {
                         it.plus(x)
                     }
-                    delay(50L)
+                    delay(if(Locale.current.language == "ja" ) 60L else 40L)
                 }
             }
             job.join()
