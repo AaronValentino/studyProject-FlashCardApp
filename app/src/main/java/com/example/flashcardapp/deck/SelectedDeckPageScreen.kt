@@ -4,6 +4,8 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.InfiniteRepeatableSpec
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.VectorConverter
+import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -151,7 +153,38 @@ fun SelectedDeckPageScreen(
     }
 
     val circleBrush = getCircleBrush()
-
+    val infiniteChangingNumX1 = infiniteTransition.animateValue(
+        initialValue = 0f,
+        targetValue = 1000f,
+        typeConverter = Float.VectorConverter,
+        animationSpec = InfiniteRepeatableSpec(
+            animation = tween(20000),
+            repeatMode = RepeatMode.Reverse
+        )
+        , label = ""
+    )
+    val infiniteChangingNumX2 = infiniteTransition.animateValue(
+        initialValue = -1f,
+        targetValue = 1f,
+        typeConverter = Float.VectorConverter,
+        animationSpec = InfiniteRepeatableSpec(
+            animation = tween(17500),
+            repeatMode = RepeatMode.Reverse
+        )
+        , label = ""
+    )
+    val ranNum1 = (1..100).random().toFloat()
+    val ranNum2 = (1..50).random().toFloat()
+    val infiniteChangingNumOffset = infiniteTransition.animateValue(
+        initialValue = ranNum1 - ranNum2,
+        targetValue = ranNum1 + ranNum2,
+        typeConverter = Float.VectorConverter,
+        animationSpec = InfiniteRepeatableSpec(
+            animation = tween(10000),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = ""
+    )
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
@@ -159,21 +192,19 @@ fun SelectedDeckPageScreen(
                 .background(backgroundBrush)
                 .fillMaxSize()
                 .drawBehind {
-                    for (value in 1..(size.maxDimension * 2 / size.minDimension).toInt()) {
-                        val radius = (0..(size.minDimension * value / 4).toInt())
-                            .random().toFloat()
-                        val x = ((size.width.toInt() / (-2))..size.width.toInt())
-                            .random().toFloat()
-                        val y = ((size.height.toInt() / 2)..size.height.toInt())
-                            .random().toFloat()
-                        drawCircle(
-                            brush = circleBrush,
-                            radius = radius,
-                            center = Offset(x = x, y = y),
-                            blendMode = BlendMode.Softlight
-                        )
-                    }
-                },
+                    val radius = infiniteChangingNumOffset.value * size.minDimension / 250
+                    val x = (size.width/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    val y = (size.height/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    drawCircle(
+                        brush = circleBrush,
+                        radius = radius,
+                        center = Offset(
+                            x = x,
+                            y = y
+                        ),
+                        blendMode = BlendMode.Softlight
+                    )
+                }
         ) {
             ElevatedCard(
                 modifier = Modifier
