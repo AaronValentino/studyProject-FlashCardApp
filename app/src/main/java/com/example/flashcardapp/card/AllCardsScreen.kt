@@ -2,7 +2,10 @@ package com.example.flashcardapp.card
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.InfiniteRepeatableSpec
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateValue
@@ -135,7 +138,10 @@ fun AllCardsScreen(
         targetValue = 1000f,
         typeConverter = Float.VectorConverter,
         animationSpec = InfiniteRepeatableSpec(
-            animation = tween(20000),
+            animation = tween(
+                durationMillis = 20000,
+                easing = FastOutLinearInEasing
+            ),
             repeatMode = RepeatMode.Reverse
         )
         , label = ""
@@ -145,7 +151,10 @@ fun AllCardsScreen(
         targetValue = 1f,
         typeConverter = Float.VectorConverter,
         animationSpec = InfiniteRepeatableSpec(
-            animation = tween(17500),
+            animation = tween(
+                durationMillis = 14441,
+                easing = FastOutSlowInEasing
+            ),
             repeatMode = RepeatMode.Reverse
         )
         , label = ""
@@ -157,7 +166,10 @@ fun AllCardsScreen(
         targetValue = ranNum1 + ranNum2,
         typeConverter = Float.VectorConverter,
         animationSpec = InfiniteRepeatableSpec(
-            animation = tween(10000),
+            animation = tween(
+                durationMillis = 10000,
+                easing = LinearEasing
+            ),
             repeatMode = RepeatMode.Reverse
         ),
         label = ""
