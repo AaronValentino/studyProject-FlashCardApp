@@ -2,12 +2,23 @@
 <resources>
     <string name="app_name">Flashard</string>
 
+    <!-- Common Phrases -->
+    <string name="button_back">戻る</string>
+    <string name="button_yes">はい</string>
+    <string name="button_cancel">キャンセル</string>
+    <string name="button_create">作成</string>
+    <string name="button_done">完了</string>
+    <string name="quantity_card">%s カード</string>
+    <string name="quantity_cards">%s カード</string>
+    <string name="contentDescription_button_close">閉じるボタン</string>
+
     <!-- Welcome Screen -->
     <string name="welcome_screen_press_to_continue">続行するにはどこかを押してください</string>
+    <string name="exit_app_confirmation">アプリを終了しますか？</string>
 
     <!-- Top App Bar Button -->
-    <string name="top_app_bar_user_profile_button">ユーザープロフィールボタン</string>
-    <string name="top_app_bar_home_button">ホームボタン</string>
+    <string name="contentDescription_top_app_bar_user_profile_button">ユーザープロファイルボタン</string>
+    <string name="contentDescription_top_app_bar_home_button">ホームボタン</string>
 
     <!-- Home Screen -->
     <string name="nav_home_title">ホーム</string>
@@ -15,16 +26,76 @@
     <string name="home_screen_start_button">勉強やるぞ！</string>
 
     <!-- Deck List Screen -->
-    <string name="nav_deck_list_title">デッキリスト</string>
+    <string name="nav_deck_list_title">デックリスト</string>
+    <string name="contentDescription_create_new_deck">新しいデックを作成するボタン</string>
+
+    <!-- Add New Deck Screen -->
+    <string name="nav_add_new_deck_title">新しいデック</string>
+    <string name="textfield_label_deck_name">新しいデックの名前</string>
+    <string name="textfield_label_deck_name_too_long">新しいデックの名前が長すぎます！</string>
+    <string name="textfield_label_deck_name_is_empty">新しいデックの名前は空にできません！</string>
+    <string name="textfield_label_deck_description">新しいデックの説明（オプション）</string>
+    <string name="textfield_label_deck_description_too_long">新しいデックの説明が長すぎます！</string>
+    <string name="create_new_deck_confirmation">新しいデックを作成しますか？</string>
+    <string name="quit_creating_new_deck_confirmation">新しいデックの作成をやめますか？</string>
 
     <!-- Deck Page Screen -->
-    <string name="nav_deck_page_title">デッキページ</string>
+    <string name="nav_deck_page_title">デックページ</string>
+    <string name="no_deck_description">デックの説明がありません。</string>
+    <string name="button_all_cards">カード一覧</string>
+    <string name="button_lesson">レッスン</string>
+    <string name="contentDescription_add_cards">カードを加えるボタン</string>
+    <string name="contentDescription_change_cards_ordering">カードの順番を変えるボタン</string>
+    <string name="contentDescription_button_edit_deck_details">デックの詳細を編集するボタン</string>
 
-    <!-- Card List Screen -->
+    <!-- Edit Deck's Details Dialog -->
+    <string name="textfield_label_edit_deck_name">デックの新しい名前</string>
+    <string name="textfield_label_edit_deck_name_too_long">デックの新しい名前が長すぎます！</string>
+    <string name="textfield_label_edit_deck_name_is_empty">デックの新しい名前は空にできません！</string>
+    <string name="textfield_label_edit_deck_description">デックの新しい説明（オプション）</string>
+    <string name="textfield_label_edit_deck_description_too_long">デックの新しい説明が長すぎます！</string>
+    <string name="delete_deck_confirmation">このデックを削除しますか？</string>
+    <string name="contentDescription_button_delete_deck">デックを削除するボタン</string>
+
+    <!-- Edit Card's Details Dialog -->
+    <string name="textfield_label_edit_card_question">カードの新しい質問</string>
+    <string name="textfield_label_edit_card_question_too_long">カードの新しい質問が長すぎます！</string>
+    <string name="textfield_label_edit_card_question_is_empty">カードの新しい質問は空にできません！</string>
+    <string name="textfield_label_edit_card_answer">カードの新しい答え</string>
+    <string name="textfield_label_edit_card_answer_too_long">カードの新しい答えが長すぎます！</string>
+    <string name="textfield_label_edit_card_answer_is_empty">カードの新しい答えは空にできません！</string>
+    <string name="delete_card_confirmation">このカードを削除しますか？</string>
+    <string name="contentDescription_button_delete_card">カードを削除するボタン</string>
+
+    <!-- All Cards Screen -->
     <string name="nav_card_list_title">カードリスト</string>
+    <string name="note_no_cards">カードはまだありません〜</string>
+    <string name="button_delete_all_cards">全てのカードを削除</string>
+    <string name="button_delete_all_cards_icon">🗑</string>
+    <string name="button_edit_mode">編集モード</string>
+    <string name="button_edit_mode_icon">✍️</string>
+    <string name="button_lesson_icon">📖</string>
+    <string name="button_expand_all">全展開</string>
+    <string name="button_expand_all_icon">🔽</string>
+    <string name="button_collapse_all">全折りたたみ</string>
+    <string name="button_collapse_all_icon">🔼</string>
+    <string name="delete_all_cards_confirmation">全てのカードを削除しますか？</string>
 
-    <!--  Card List Screen -->
+    <!--  Card Study Mode Screen -->
     <string name="nav_card_study_mode_title">カード - 勉強モード</string>
+
+    <!-- Add New Card Screen -->
+    <string name="add_new_card_instruction">カードの質問と答えを記入してください</string>
+    <string name="textfield_label_card_question">質問</string>
+    <string name="textfield_label_card_question_too_long">質問が長すぎます！</string>
+    <string name="textfield_label_card_question_is_empty">質問は空にできません！</string>
+    <string name="textfield_label_card_answer">答え</string>
+    <string name="textfield_label_card_answer_too_long">答えが長すぎます！</string>
+    <string name="textfield_label_card_answer_is_empty">答えは空にできません！</string>
+    <string name="button_back_to_deck">デックに戻る</string>
+    <string name="toast_message_new_card_created">新しいカードを作成しました！</string>
+    <string name="button_create_plus_next">作成 + 次</string>
+    <string name="quit_creating_new_cards_confirmation">新しいカードの作成をやめますか？</string>
 
     <!-- User Profile Screen -->
     <string name="nav_user_profile_title">プロフィール</string>

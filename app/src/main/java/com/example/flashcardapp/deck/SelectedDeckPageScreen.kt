@@ -64,12 +64,15 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.R
 import com.example.flashcardapp.card.EditCardDialog
 import com.example.flashcardapp.data.Card
 import com.example.flashcardapp.ui.theme.Shape
@@ -257,7 +260,8 @@ fun SelectedDeckPageScreen(
                     )
                     Text(
                         text = uiState.value.deckCards.size.let{
-                            if (it <= 1) "$it card" else "$it cards"
+                            if (it <= 1) stringResource(id = R.string.quantity_card, it)
+                            else stringResource(id = R.string.quantity_cards, it)
                         },
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
@@ -275,27 +279,30 @@ fun SelectedDeckPageScreen(
                             color = MaterialTheme.colorScheme.primary
                         )
                     ) {
-                        Text(
-                            text = "Deck's descriptions: ",
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Start,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    top = 16.dp,
-                                    end = 16.dp,
-                                    start = 16.dp
+                        uiState.value.selectedDeck.description.let {
+                            if (it.isEmpty()) {
+                                Text(
+                                    text = stringResource(id = R.string.no_deck_description),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    fontStyle = FontStyle.Italic,
+                                    textAlign = TextAlign.Start,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(16.dp),
+                                    overflow = TextOverflow.Ellipsis
                                 )
-                        )
-                        Text(
-                            text = uiState.value.selectedDeck.description,
-                            style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Start,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp),
-                            overflow = TextOverflow.Ellipsis
-                        )
+                            }
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp),
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                     }
                     Box(
                         modifier = Modifier.fillMaxSize(0.90f),
@@ -342,7 +349,7 @@ fun SelectedDeckPageScreen(
                                         ) {
                                             Icon(
                                                 imageVector = Icons.Default.Add,
-                                                contentDescription = "Add cards",
+                                                contentDescription = stringResource(id = R.string.contentDescription_add_cards),
                                                 modifier = Modifier
                                                     .fillMaxSize()
                                                     .padding(8.dp)
@@ -364,7 +371,7 @@ fun SelectedDeckPageScreen(
                                             imageVector =
                                                 if (!reverseOrder) Icons.AutoMirrored.Filled.KeyboardArrowLeft
                                                 else Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                                            contentDescription = "Change cards' ordering",
+                                            contentDescription = stringResource(id = R.string.contentDescription_change_cards_ordering),
                                             modifier = Modifier
                                                 .fillMaxSize()
                                                 .padding(8.dp)
@@ -400,7 +407,7 @@ fun SelectedDeckPageScreen(
                             )
                         ) {
                             Text(
-                                text = "All cards",
+                                text = stringResource(id = R.string.button_all_cards),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }
@@ -413,7 +420,7 @@ fun SelectedDeckPageScreen(
                             )
                         ) {
                             Text(
-                                text = "Lesson",
+                                text = stringResource(id = R.string.button_lesson),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }
@@ -427,7 +434,7 @@ fun SelectedDeckPageScreen(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Close,
-                    contentDescription = "Close Button",
+                    contentDescription = stringResource(id = R.string.contentDescription_button_close),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -439,7 +446,7 @@ fun SelectedDeckPageScreen(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Edit,
-                    contentDescription = "Edit Deck Details Button",
+                    contentDescription = stringResource(id = R.string.contentDescription_button_edit_deck_details),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -466,7 +473,7 @@ fun NoCardsAddNewCard(
         ) {
             Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = "Add cards",
+                contentDescription = stringResource(id = R.string.contentDescription_add_cards),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(40.dp)
@@ -486,7 +493,9 @@ fun GenerateLazyRowForCards(
             .fillMaxWidth()
             .aspectRatio(0.8f),
         contentPadding = PaddingValues(
-            vertical = 16.dp),
+            top = 24.dp,
+            bottom = 4.dp
+        ),
         reverseLayout = reverseOrder,
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
@@ -571,7 +580,7 @@ fun GenerateLazyRowForCards(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Edit,
-                        contentDescription = "Close Button",
+                        contentDescription = stringResource(id = R.string.contentDescription_button_close),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }

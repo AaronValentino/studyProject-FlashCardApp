@@ -179,7 +179,7 @@ fun ConfirmExitAppDialog(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Confirm exit?",
+                    text = stringResource(id = R.string.exit_app_confirmation),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -192,10 +192,10 @@ fun ConfirmExitAppDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = dismissExitAppClicked) {
-                        Text("Back")
+                        Text(stringResource(id = R.string.button_back))
                     }
                     ElevatedButton(onClick = confirmExitAppClicked) {
-                        Text("Yes")
+                        Text(stringResource(id = R.string.button_yes))
                     }
                 }
             }

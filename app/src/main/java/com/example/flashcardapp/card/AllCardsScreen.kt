@@ -53,6 +53,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode.Companion.Softlight
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -60,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.R
 import com.example.flashcardapp.data.Card
 import com.example.flashcardapp.deck.SelectedDeckAndCardsDetailsViewModel
 import com.example.flashcardapp.ui.theme.Shape
@@ -185,8 +187,10 @@ fun AllCardsScreen(
                 .fillMaxSize()
                 .drawBehind {
                     val radius = infiniteChangingNumOffset.value * size.minDimension / 250
-                    val x = (size.width/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
-                    val y = (size.height/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    val x =
+                        (size.width / 2) + (infiniteChangingNumX1.value * infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    val y =
+                        (size.height / 2) + (infiniteChangingNumX1.value * infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
                     drawCircle(
                         brush = circleBrush,
                         radius = radius,
@@ -209,10 +213,10 @@ fun AllCardsScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "The deck is empty!",
+                            text = stringResource(id = R.string.note_no_cards),
                             style = MaterialTheme.typography.displayMedium,
                             color = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier.padding(top = 40.dp)
+                            modifier = Modifier.padding(40.dp)
                         )
                     }
                 } else {
@@ -377,13 +381,13 @@ fun GenerateCards(
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     Text(
-                                        text = "Delete all cards",
+                                        text = stringResource(id = R.string.button_delete_all_cards),
                                         modifier = Modifier.fillMaxWidth(),
                                         textAlign = TextAlign.Center,
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                     Text(
-                                        text = "🗑️",
+                                        text = stringResource(id = R.string.button_delete_all_cards_icon),
                                         modifier = Modifier.fillMaxWidth(),
                                         textAlign = TextAlign.Center,
                                         style = MaterialTheme.typography.displaySmall
@@ -433,21 +437,21 @@ fun GenerateButtonsRow(
         horizontalArrangement = Arrangement.Center
     ) {
         GenerateButtons(
-            displayText1 = "Edit Mode",
-            displayText2 = "✍️",
+            displayText = stringResource(id = R.string.button_edit_mode),
+            displayTextIcon = stringResource(id = R.string.button_edit_mode_icon),
             modifier = Modifier.weight(1f),
             onClicked = onClickedEditMode
         )
         GenerateButtons(
-            displayText1 = "Lessons",
-            displayText2 = "📖",
+            displayText = stringResource(id = R.string.button_lesson),
+            displayTextIcon = stringResource(id = R.string.button_lesson_icon),
             modifier = Modifier.weight(1f),
             onClicked = onClickedGoToLessons,
             elevationToSet = infiniteChangingElevation.value
         )
         GenerateButtons(
-            displayText1 = if (!expandAll) "Expand all" else "Collapse all",
-            displayText2 = if (!expandAll) "🔽" else "🔼",
+            displayText = if (!expandAll) stringResource(id = R.string.button_expand_all) else stringResource(id = R.string.button_collapse_all),
+            displayTextIcon = if (!expandAll) stringResource(id = R.string.button_expand_all_icon) else stringResource(id = R.string.button_collapse_all_icon),
             modifier = Modifier.weight(1f),
             onClicked = onClickedExpandAll
         )
@@ -456,8 +460,8 @@ fun GenerateButtonsRow(
 
 @Composable
 fun GenerateButtons(
-    displayText1: String,
-    displayText2: String,
+    displayText: String,
+    displayTextIcon: String,
     modifier: Modifier = Modifier,
     onClicked: () -> Unit,
     elevationToSet: Dp = 10.dp
@@ -473,14 +477,14 @@ fun GenerateButtons(
     ) {
         Column {
             Text(
-                text = displayText1,
+                text = displayText,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelMedium
             )
-            if (displayText2.isNotEmpty()) {
+            if (displayTextIcon.isNotEmpty()) {
                 Text(
-                    text = displayText2,
+                    text = displayTextIcon,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
@@ -510,7 +514,7 @@ fun ConfirmDeleteAllCardsDialog(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Confirm delete all cards?",
+                    text = stringResource(id = R.string.delete_all_cards_confirmation),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -523,10 +527,10 @@ fun ConfirmDeleteAllCardsDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = dismissDeleteAllCardsClicked) {
-                        Text("Cancel")
+                        Text(text = stringResource(id = R.string.button_cancel))
                     }
                     ElevatedButton(onClick = confirmDeleteAllCardsClicked) {
-                        Text("Yes")
+                        Text(text = stringResource(id = R.string.button_yes))
                     }
                 }
             }

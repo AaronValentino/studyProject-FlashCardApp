@@ -39,12 +39,14 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.R
 import com.example.flashcardapp.ui.theme.getCircleBrush
 import androidx.compose.material3.MaterialTheme as MaterialTheme1
 
@@ -113,8 +115,10 @@ fun DeckListScreen(
                 .fillMaxSize()
                 .drawBehind {
                     val radius = infiniteChangingNumOffset.value * size.minDimension / 250
-                    val x = (size.width/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
-                    val y = (size.height/2) + (infiniteChangingNumX1.value*infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    val x =
+                        (size.width / 2) + (infiniteChangingNumX1.value * infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
+                    val y =
+                        (size.height / 2) + (infiniteChangingNumX1.value * infiniteChangingNumX2.value - infiniteChangingNumOffset.value)
                     drawCircle(
                         brush = circleBrush,
                         radius = radius,
@@ -190,7 +194,9 @@ private fun GenerateCard(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = if (numOfCards <= 1) "$numOfCards card" else "$numOfCards cards",
+                text =
+                if (numOfCards <= 1) stringResource(id = R.string.quantity_card, numOfCards)
+                else stringResource(id = R.string.quantity_cards, numOfCards) ,
                 style = MaterialTheme1.typography.bodyMedium
             )
         }
@@ -221,7 +227,7 @@ private fun GenerateCardAddNewDeck(
         ) {
             Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = "null",
+                contentDescription = stringResource(id = R.string.contentDescription_create_new_deck),
                 modifier = Modifier.size(50.dp),
                 tint = MaterialTheme1.colorScheme.primary
             )

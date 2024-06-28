@@ -27,12 +27,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.R
 import com.example.flashcardapp.data.Deck
 import com.example.flashcardapp.data.DeckConstant.DECKDESCRIPTIONLENGTH
 import com.example.flashcardapp.data.DeckConstant.DECKNAMELENGTH
@@ -90,12 +92,17 @@ fun AddNewDeckScreen(
                         label = {
                             if (deckName.length > DECKNAMELENGTH) {
                                 Text(
-                                    text = "New deck's name is too long!",
+                                    text = stringResource(id = R.string.textfield_label_deck_name_too_long),
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            } else if (deckName.isEmpty()) {
+                                Text(
+                                    text = stringResource(id = R.string.textfield_label_deck_name_is_empty),
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             } else {
                                 Text(
-                                    text = "New deck's name",
+                                    text = stringResource(id = R.string.textfield_label_deck_name),
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -119,12 +126,12 @@ fun AddNewDeckScreen(
                         label = {
                             if (deckDescription.length > DECKDESCRIPTIONLENGTH) {
                                 Text(
-                                    text= "New deck's description is too long!",
+                                    text = stringResource(id = R.string.textfield_label_deck_description_too_long),
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             } else {
                                 Text(
-                                    text= "New deck's description (Optional)",
+                                    text = stringResource(id = R.string.textfield_label_deck_description),
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -144,13 +151,13 @@ fun AddNewDeckScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = { cancelCreateNewDeck = true }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(id = R.string.button_cancel))
                     }
                     ElevatedButton(
                         onClick = { createNewDeck = true },
                         enabled = (deckName.length <= DECKNAMELENGTH && deckDescription.length <= DECKDESCRIPTIONLENGTH)
                     ) {
-                        Text(text = "Create")
+                        Text(text = stringResource(id = R.string.button_create))
                     }
                 }
             }
@@ -204,7 +211,7 @@ fun CreateNewDeckDialog(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Confirm creating the new deck?",
+                    text = stringResource(id = R.string.create_new_deck_confirmation),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -217,10 +224,10 @@ fun CreateNewDeckDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = dismissCreateNewDeckClicked) {
-                        Text("Back")
+                        Text(text = stringResource(R.string.button_back))
                     }
                     ElevatedButton(onClick = confirmCreateNewDeckClicked) {
-                        Text("Yes")
+                        Text(text = stringResource(R.string.button_yes))
                     }
                 }
             }
@@ -249,7 +256,7 @@ fun CancelCreateNewDeckDialog(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Confirm quitting creating the new deck?",
+                    text = stringResource(id = R.string.quit_creating_new_deck_confirmation),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -262,10 +269,10 @@ fun CancelCreateNewDeckDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = dismissCancelCreateNewDeckClicked) {
-                        Text("Back")
+                        Text(text = stringResource(id = R.string.button_back))
                     }
                     ElevatedButton(onClick = confirmCancelCreateNewDeckClicked) {
-                        Text("Yes")
+                        Text(text = stringResource(id = R.string.button_yes))
                     }
                 }
             }

@@ -30,12 +30,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.AppViewModelProvider
+import com.example.flashcardapp.R
 import com.example.flashcardapp.data.CardConstant.CARDANSWERLENGTH
 import com.example.flashcardapp.data.CardConstant.CARDQUESTIONLENGTH
 import kotlinx.coroutines.delay
@@ -83,7 +85,7 @@ fun AddNewCardScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Please enter your question and answer.",
+                    text = stringResource(id = R.string.add_new_card_instruction),
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(0.5f),
@@ -108,19 +110,19 @@ fun AddNewCardScreen(
                                 if (currentNewCardQuestion.length > CARDQUESTIONLENGTH) {
                                     contentError = true
                                     Text(
-                                        text = "Question is too long!",
+                                        text = stringResource(id = R.string.textfield_label_card_question_too_long),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else if (currentNewCardQuestion.isEmpty()) {
                                     contentError = true
                                     Text(
-                                        text = "Question cannot be empty.",
+                                        text = stringResource(id = R.string.textfield_label_card_question_is_empty),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else {
                                     contentError = false
                                     Text(
-                                        text = "Question",
+                                        text = stringResource(id = R.string.textfield_label_card_question),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
@@ -146,19 +148,19 @@ fun AddNewCardScreen(
                                 if (currentNewCardAnswer.length > CARDANSWERLENGTH) {
                                     contentError = true
                                     Text(
-                                        text = "Answer is too long!",
+                                        text = stringResource(id = R.string.textfield_label_card_answer_too_long),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else if (currentNewCardAnswer.isEmpty()) {
                                     contentError = true
                                     Text(
-                                        text = "Answer cannot be empty.",
+                                        text = stringResource(id = R.string.textfield_label_card_answer_is_empty),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else {
                                     contentError = false
                                     Text(
-                                        text = "Answer",
+                                        text = stringResource(id = R.string.textfield_label_card_answer),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
@@ -180,7 +182,7 @@ fun AddNewCardScreen(
                 ) {
                     ElevatedButton(onClick = { cancelCreateNewCard = true }
                     ) {
-                        Text(text = "Back to deck")
+                        Text(text = stringResource(id = R.string.button_back_to_deck))
                     }
                     ElevatedButton(
                         onClick = {
@@ -193,11 +195,11 @@ fun AddNewCardScreen(
                                 currentNewCardQuestion = ""
                                 currentNewCardAnswer = ""
                             }
-                            Toast.makeText(context, "New card created!", LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.toast_message_new_card_created), LENGTH_SHORT).show()
                         },
                         enabled = !contentError
                     ) {
-                        Text(text = "Create + Next")
+                        Text(text = stringResource(id = R.string.button_create_plus_next))
                     }
                 }
             }
@@ -232,7 +234,7 @@ fun CancelCreateNewDeckDialog(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Confirm quitting creating new cards?",
+                    text = stringResource(id = R.string.quit_creating_new_cards_confirmation),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -245,10 +247,10 @@ fun CancelCreateNewDeckDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = dismissCancelCreateNewDeckClicked) {
-                        Text("Back")
+                        Text(text = stringResource(id = R.string.button_back))
                     }
                     ElevatedButton(onClick = confirmCancelCreateNewDeckClicked) {
-                        Text("Yes")
+                        Text(text = stringResource(id = R.string.button_yes))
                     }
                 }
             }

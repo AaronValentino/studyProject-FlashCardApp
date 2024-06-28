@@ -66,7 +66,7 @@ fun FlashardNavHost(
                     TopAppBarWithIcon(
                         titleText = stringResource(id = R.string.app_name),
                         iconImageVector = Icons.Filled.Person,
-                        iconContentDescription = stringResource(id = R.string.top_app_bar_user_profile_button),
+                        iconContentDescription = stringResource(id = R.string.contentDescription_top_app_bar_user_profile_button),
                         onIconButtonClicked = { navController.navigate(UserProfile) }
                     )
                 },
@@ -76,7 +76,7 @@ fun FlashardNavHost(
         }
         composable<DeckList> {
             DeckListScreen(
-                topBar = { TopAppBarNoIcon(titleText = "Deck List") },
+                topBar = { TopAppBarNoIcon(titleText = stringResource(id = R.string.nav_deck_list_title)) },
                 backgroundBrush = backgroundBrush,
                 cardClicked = { deckId -> navController.navigate(SelectedDeckPage(deckId)) },
                 addNewDeckClicked = { newDeckId -> navController.navigate(AddNewDeck(newDeckId)) }
@@ -85,7 +85,7 @@ fun FlashardNavHost(
         composable<AddNewDeck> {
             val addNewDeck: AddNewDeck = it.toRoute()
             AddNewDeckScreen(
-                topBar = { TopAppBarNoIcon(titleText = "New Deck") },
+                topBar = { TopAppBarNoIcon(titleText = stringResource(id = R.string.nav_add_new_deck_title)) },
                 backgroundBrush = backgroundBrush,
                 newDeckCreateClicked = { deckId ->
                     navController.popBackStack()
@@ -125,7 +125,7 @@ fun FlashardNavHost(
         composable<AllCards> {
             val allCards: AllCards = it.toRoute()
             AllCardsScreen(
-                topBar = { TopAppBarNoIcon(titleText = allCards.deckName,) },
+                topBar = { TopAppBarNoIcon(titleText = allCards.deckName) },
                 backgroundBrush = backgroundBrush,
                 onClickedGoToLessons = {  }
             )
@@ -138,7 +138,7 @@ fun FlashardNavHost(
                     TopAppBarWithIcon(
                         titleText = stringResource(id = R.string.nav_user_profile_title),
                         iconImageVector = Icons.Filled.Home,
-                        iconContentDescription = stringResource(id = R.string.top_app_bar_home_button),
+                        iconContentDescription = stringResource(id = R.string.contentDescription_top_app_bar_home_button),
                         iconPadding = 2,
                         onIconButtonClicked = { navController.navigate(Home) }
                     )

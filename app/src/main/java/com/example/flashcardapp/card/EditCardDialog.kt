@@ -28,10 +28,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.flashcardapp.R
 import com.example.flashcardapp.data.CardConstant
 import com.example.flashcardapp.deck.SelectedDeckAndCardsDetailsViewModel
 
@@ -94,12 +96,17 @@ fun EditCardDialog(
                             label = {
                                 if (editCardQuestion.length > CardConstant.CARDQUESTIONLENGTH) {
                                     Text(
-                                        text = "The card's new question is too long!",
+                                        text = stringResource(id = R.string.textfield_label_edit_card_question_too_long),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                } else if (editCardQuestion.isEmpty()) {
+                                    Text(
+                                        text = stringResource(id = R.string.textfield_label_edit_card_question_is_empty),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else {
                                     Text(
-                                        text = "Card's new question",
+                                        text = stringResource(id = R.string.textfield_label_edit_card_question),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
@@ -123,12 +130,17 @@ fun EditCardDialog(
                             label = {
                                 if (editCardAnswer.length > CardConstant.CARDANSWERLENGTH) {
                                     Text(
-                                        text = "Card's new answer is too long!",
+                                        text = stringResource(id = R.string.textfield_label_edit_card_answer_too_long),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                } else if (editCardAnswer.isEmpty()) {
+                                    Text(
+                                        text = stringResource(id = R.string.textfield_label_edit_card_answer_is_empty),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else {
                                     Text(
-                                        text = "Card's new answer",
+                                        text = stringResource(id = R.string.textfield_label_edit_card_answer),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
@@ -147,7 +159,7 @@ fun EditCardDialog(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         ElevatedButton(onClick = dismissEditCardDetailsClicked) {
-                            Text("Cancel")
+                            Text(text = stringResource(id = R.string.button_cancel))
                         }
                         ElevatedButton(
                             onClick = {
@@ -165,7 +177,7 @@ fun EditCardDialog(
                                             ((editCardQuestion != currentCardState.value.question) || (editCardAnswer != currentCardState.value.answer))
                                     )
                         ) {
-                            Text("Done")
+                            Text(text = stringResource(id = R.string.button_done))
                         }
                     }
                 }
@@ -176,7 +188,7 @@ fun EditCardDialog(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
-                    contentDescription = "Delete Card Button",
+                    contentDescription = stringResource(id = R.string.contentDescription_button_delete_card),
                     tint = MaterialTheme.colorScheme.error
                 )
             }
@@ -205,7 +217,7 @@ fun ConfirmDeleteCardDialog(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Confirm delete this card?",
+                    text = stringResource(id = R.string.delete_card_confirmation),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -218,10 +230,10 @@ fun ConfirmDeleteCardDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = dismissDeleteCardClicked) {
-                        Text("Cancel")
+                        Text(text = stringResource(id = R.string.button_cancel))
                     }
                     ElevatedButton(onClick = confirmDeleteCardClicked) {
-                        Text("Yes")
+                        Text(text = stringResource(id = R.string.button_yes))
                     }
                 }
             }

@@ -27,10 +27,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.flashcardapp.R
 import com.example.flashcardapp.data.Deck
 import com.example.flashcardapp.data.DeckConstant
 
@@ -89,12 +91,17 @@ fun EditDeckDialog(
                             label = {
                                 if (editDeckName.length > DeckConstant.DECKNAMELENGTH) {
                                     Text(
-                                        text = "Deck's new name is too long!",
+                                        text = stringResource(id = R.string.textfield_label_edit_deck_name_too_long),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                } else if (editDeckName.isEmpty()) {
+                                    Text(
+                                        text = stringResource(id = R.string.textfield_label_edit_deck_name_is_empty),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else {
                                     Text(
-                                        text = "Deck's new name",
+                                        text = stringResource(id = R.string.textfield_label_edit_deck_name),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
@@ -118,12 +125,12 @@ fun EditDeckDialog(
                             label = {
                                 if (editDeckDescription.length > DeckConstant.DECKDESCRIPTIONLENGTH) {
                                     Text(
-                                        text = "Deck's new description is too long!",
+                                        text = stringResource(id = R.string.textfield_label_edit_deck_description_too_long),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 } else {
                                     Text(
-                                        text = "Deck's new description (Optional)",
+                                        text = stringResource(id = R.string.textfield_label_edit_deck_description),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
@@ -142,7 +149,7 @@ fun EditDeckDialog(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         ElevatedButton(onClick = dismissEditDeckDetailsClicked) {
-                            Text("Cancel")
+                            Text(text = stringResource(id = R.string.button_cancel))
                         }
                         ElevatedButton(
                             onClick = {
@@ -155,7 +162,7 @@ fun EditDeckDialog(
                                             ((editDeckName != oldDeckName) || (editDeckDescription != oldDeckDescription))
                                     )
                         ) {
-                            Text("Done")
+                            Text(stringResource(id = R.string.button_done))
                         }
                     }
                 }
@@ -166,7 +173,7 @@ fun EditDeckDialog(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
-                    contentDescription = "Delete Deck Button",
+                    contentDescription = stringResource(id = R.string.contentDescription_button_delete_deck),
                     tint = MaterialTheme.colorScheme.error
                 )
             }
@@ -195,7 +202,7 @@ fun ConfirmDeleteDeckDialog(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Confirm delete this deck?",
+                    text = stringResource(id = R.string.delete_deck_confirmation),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -208,10 +215,10 @@ fun ConfirmDeleteDeckDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(onClick = dismissDeleteDeckClicked) {
-                        Text("Cancel")
+                        Text(text = stringResource(id = R.string.button_cancel))
                     }
                     ElevatedButton(onClick = confirmDeleteDeckClicked) {
-                        Text("Yes")
+                        Text(text = stringResource(id = R.string.button_yes))
                     }
                 }
             }
