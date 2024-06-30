@@ -210,8 +210,8 @@ fun SelectedDeckPageScreen(
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
-                .padding(paddingValues)
                 .background(backgroundBrush)
+                .padding(paddingValues)
                 .fillMaxSize()
                 .drawBehind {
                     val radius = infiniteChangingNumOffset.value * size.minDimension / 250

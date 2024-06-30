@@ -90,7 +90,8 @@ fun AddNewCardScreen(
                         .fillMaxWidth()
                         .weight(0.5f),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
                 Column(
                     modifier = Modifier
